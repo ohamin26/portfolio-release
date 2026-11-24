@@ -1,16 +1,8 @@
-.chapter {
-  border-top: 1px solid #d7dbdf;
-  margin-top: clamp(32px, 5vw, 64px);
-  padding-top: clamp(28px, 4vw, 56px);
-}
-.label { color: #2454c6; font: 600 .73rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .04em; }
-.chapter h2 { margin-block: 8px 16px; font-size: clamp(1.65rem, 3.2vw, 2.8rem); font-weight: 710; line-height: 1.32; letter-spacing: -.055em; }
-.copy { max-width: 46rem; color: #434c57; line-height: 1.8; }
+.label { composes: label from "./study.module.css"; }
 .figure, .trace { border-radius: 6px; padding: clamp(16px, 2.5vw, 30px); margin-top: 24px; }
 .figure { background: #f5f6f8; }
 .trace { background: #eaf0fd; }
 .figure figcaption, .trace figcaption { margin-top: 16px; color: #535b66; font-size: .84rem; line-height: 1.6; }
-.figure + .copy { margin-top: 20px; }
 
 .devices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
 .device { padding: clamp(14px, 2vw, 22px); border: 1px solid #d7dbdf; border-radius: 4px; background: white; }
