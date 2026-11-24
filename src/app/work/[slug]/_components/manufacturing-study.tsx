@@ -1,6 +1,6 @@
 import type { TabTiming } from "@/common/data/tab-timing";
 import { DeviceComparison, TabComparison } from "./manufacturing-figures";
-import s from "./manufacturing.module.css";
+import s from "./study.module.css";
 
 export function ManufacturingStudy({ timing }: { timing: TabTiming | null }) {
   return (
