@@ -15,9 +15,10 @@ pnpm dev
 pnpm lint
 pnpm typecheck
 pnpm build
+pnpm exec playwright install --only-shell chromium  # 최초 1회 (Linux CI에서는 --with-deps 추가)
 pnpm test
 ```
 
-`pnpm test`는 먼저 라우트 위치와 공용 모듈의 의존 방향을 검사한다. 이어서 Playwright가 프로덕션 빌드를 루프백 주소에서 시작하여 HTTP 응답을 검사한다. 이 단계는 브라우저를 띄우지 않으므로 브라우저 바이너리 설치가 필요 없다. 기본 포트 4177이 사용 중이면 `PORTFOLIO_TEST_PORT=4187 pnpm test`로 실행한다. PR 검사도 같은 순서로 실행하며 배포하지 않는다.
+`pnpm test`는 먼저 라우트 위치와 공용 모듈의 의존 방향을 검사한다. 이어서 Playwright가 프로덕션 빌드를 루프백 주소에서 시작하여 HTTP 응답을 검사한다. 사례 조회와 그래프 계산을 확인하고, 공용 버튼은 Chromium에서 모바일 너비·키보드 포커스·모션 감소 설정으로 검증한다. 별도의 시연용 라우트는 만들지 않는다. 기본 포트 4177이 사용 중이면 `PORTFOLIO_TEST_PORT=4187 pnpm test`로 실행한다. PR 검사도 같은 순서로 실행하며 배포하지 않는다.
 
 ESLint는 JavaScript 기본 규칙, TypeScript 권장 규칙, Next.js의 Core Web Vitals 규칙을 사용한다.
