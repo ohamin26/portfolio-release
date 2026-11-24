@@ -5,7 +5,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import tailwind from "@tailwindcss/postcss";
 import { expect, test } from "@playwright/test";
 import postcss from "postcss";
-import { Button, buttonVariants } from "@/common/components/ui/button";
+import { Button } from "@/common/components/ui/button";
 
 test.use({ viewport: { width: 375, height: 667 }, reducedMotion: "reduce" });
 
@@ -15,7 +15,9 @@ test("모바일 너비에서 버튼은 키보드로 작동하고, 버튼처럼 �
   const fixture = createElement("form", null,
     createElement(Button, { variant: "outline" }, "자세히"),
     createElement(Button, { disabled: true }, "사용 불가"),
-    createElement("a", { href: "#work", className: buttonVariants({ variant: "link" }) }, "작업 목록"),
+    createElement(Button, { asChild: true, variant: "link" },
+      createElement("a", { href: "#work" }, "작업 목록"),
+    ),
     createElement(Button, { type: "submit", className: "px-8" }, "저장"),
   );
   await page.setContent(renderToStaticMarkup(fixture));

@@ -7,12 +7,11 @@
 .devices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
 .device { padding: clamp(14px, 2vw, 22px); border: 1px solid #d7dbdf; border-radius: 4px; background: white; }
 .device h3 { margin-block: 4px 12px; font-size: 1.1rem; font-weight: 680; }
-.device table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-.device :where(th, td) { padding: 8px; text-align: left; }
-.device th { background: #f5f6f8; font-weight: 550; }
-.device :where(th, td):last-child { text-align: right; }
-.device td { border-bottom: 1px solid #d7dbdf; }
-.device td:last-child, .touchFields dd { font-weight: 650; }
+.device :where(th, td) { padding-inline: 8px; }
+.device th { color: var(--ui-foreground); font-size: inherit; line-height: inherit; font-weight: 550; }
+.device thead tr { border: 0; }
+.device tbody tr { border-bottom: 1px solid var(--ui-border); }
+.touchFields dd { font-weight: 650; }
 .touchFields { display: grid; gap: 6px; font-size: .9rem; }
 .touchFields div { display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; }
 .touchFields div:last-child { background: #eaf0fd; color: #20439a; }

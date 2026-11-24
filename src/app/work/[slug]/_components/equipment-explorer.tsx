@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { RadioGroup, RadioGroupItem } from "@/common/components/ui/radio-group";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/common/components/ui/table";
 import s from "./equipment.module.css";
 
 const equipment = ["설비 A", "설비 B"] as const;
@@ -20,18 +22,41 @@ export function EquipmentExplorer() {
   return (
     <div className={s.explorer}>
       <p className={s.kicker}>예시 데이터</p>
-      <fieldset className={s.picker}>
-        <legend>설비 선택</legend>
-        <p>전체 합계를 살펴본 뒤, 설비 하나를 골라 차트와 표를 비교해 보세요.</p>
-        <div className={s.options}>
-          {scopes.map((name) => (
-            <label key={name}>
-              <input type="radio" name="equipment-scope" checked={scope === name} onChange={() => setScope(name)} />
+      <div className="mt-1.5 min-w-0">
+        <h3 id="scope-title" className="text-[1.2rem] font-bold">설비 선택</h3>
+        <p id="scope-hint" className="mt-1 leading-[1.65] text-muted-foreground">
+          전체 합계를 살펴본 뒤, 설비 하나를 골라 차트와 표를 비교해 보세요.
+        </p>
+        <RadioGroup
+          aria-labelledby="scope-title"
+          aria-describedby="scope-hint"
+          value={scope}
+          onValueChange={(value) => {
+            const selected = scopes.find((name) => name === value);
+            if (selected) setScope(selected);
+          }}
+          className="mt-3.5 mb-5 flex flex-wrap gap-2"
+        >
+          {scopes.map((name, index) => (
+            <label
+              key={name}
+              htmlFor={`scope-${index}`}
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-sm border border-input bg-background px-3 py-1.5 has-aria-checked:border-ring has-aria-checked:font-[650] has-aria-checked:text-selection has-focus-visible:outline-2 has-focus-visible:outline-offset-3 has-focus-visible:outline-ring"
+            >
+              <RadioGroupItem
+                id={`scope-${index}`}
+                value={name}
+                // 짧게 누른 방향키를 떼고 포커스가 도착해도 차트가 이전 설비에 남지 않게 한다.
+                onFocus={(event) => {
+                  if (event.currentTarget.matches(":focus-visible")) setScope(name);
+                }}
+                className="focus-visible:outline-none"
+              />
               {name}
             </label>
           ))}
-        </div>
-      </fieldset>
+        </RadioGroup>
+      </div>
       <p className="sr-only" role="status">{scope} 기준으로 차트와 표를 표시합니다.</p>
       <div className={s.results}>
         <figure className={s.card}>
@@ -53,15 +78,25 @@ export function EquipmentExplorer() {
           <p className={s.scale}>차트 눈금: 0–{axisMax}건</p>
         </figure>
         <div className={s.card}>
-          <table className={s.table}>
-            <caption>{scope} · 수집 내역</caption>
-            <thead><tr><th scope="col">시간</th><th scope="col">설비</th><th scope="col">수집 건수</th></tr></thead>
-            <tbody>
+          <Table className="tabular-nums">
+            <TableCaption>{scope} · 수집 내역</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col">시간</TableHead>
+                <TableHead scope="col">설비</TableHead>
+                <TableHead scope="col" className="text-right">수집 건수</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {samples.flatMap(({ time, counts }) => visibleEquipment.map((name) => (
-                <tr key={`${time}-${name}`}><td>{time}</td><td>{name}</td><td>{counts[name]}건</td></tr>
+                <TableRow key={`${time}-${name}`}>
+                  <TableCell>{time}</TableCell>
+                  <TableCell>{name}</TableCell>
+                  <TableCell className="text-right">{counts[name]}건</TableCell>
+                </TableRow>
               )))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

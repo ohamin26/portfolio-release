@@ -1,27 +1,15 @@
 .explorer { margin-top: 24px; padding: clamp(16px, 2.5vw, 30px); border-radius: 6px; background: #f5f6f8; }
 .kicker { composes: label from "./study.module.css"; }
-.picker { min-width: 0; margin-top: 6px; }
-.picker legend { font-size: 1.2rem; font-weight: 700; }
-.picker p { margin-top: 4px; color: #434c57; line-height: 1.65; }
-.options { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 14px 20px; }
-.options label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 12px; border: 1px solid #939da8; border-radius: 4px; background: white; cursor: pointer; }
-.options input { accent-color: #2454c6; }
-.options label:has(:checked) { border-color: #2454c6; color: #1d44a0; font-weight: 650; }
-.options label:has(:focus-visible) { outline: 2px solid #2454c6; outline-offset: 3px; }
 .results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
 .card { min-width: 0; padding: clamp(14px, 2vw, 24px); border: 1px solid #d7dbdf; border-radius: 4px; background: white; }
-.card figcaption, .table caption { margin-bottom: 16px; text-align: left; font-weight: 680; }
-.plot, .table { font-variant-numeric: tabular-nums; }
+.card figcaption { margin-bottom: 16px; text-align: left; font-weight: 680; }
+.plot { font-variant-numeric: tabular-nums; }
 .plot > div + div { margin-top: 12px; }
-.plot dt, .scale, .table th { color: #535b66; font-size: .875rem; }
+.plot dt, .scale { color: #535b66; font-size: .875rem; }
 .plot dd { display: grid; grid-template-columns: minmax(0, 1fr) 4ch; align-items: center; gap: 12px; text-align: right; font-weight: 650; white-space: nowrap; }
 .track { display: block; height: 8px; background: #e8ecf2; }
 .track > span { display: block; height: 100%; background: #2454c6; }
 .scale { margin-top: 16px; }
-.table { width: 100%; border-collapse: collapse; }
-.table :is(th, td) { padding-block: 8px; text-align: left; border-bottom: 1px solid #d7dbdf; }
-.table :is(th, td):last-child { text-align: right; }
-.table tbody tr:last-child td { border-bottom: 0; }
 @media (max-width: 640px) {
   .results { grid-template-columns: minmax(0, 1fr); }
 }

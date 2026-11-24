@@ -1,2 +1,31 @@
 /* 이 파일을 기준으로 src/ 안의 클래스만 탐색한다. */
 @import "tailwindcss" source("../../");
+
+/* A안의 공용 UI 색. 화면 전용 도해는 각 라우트가 관리한다. */
+:root {
+  --ui-background: #fff;
+  --ui-foreground: #17191c;
+  --ui-primary: #171717;
+  --ui-primary-foreground: #fff;
+  --ui-accent: #f5f5f5;
+  --ui-muted: #f5f6f8;
+  --ui-muted-foreground: #535b66;
+  --ui-border: #d7dbdf;
+  --ui-input: #75818d;
+  --ui-ring: #2454c6;
+  --ui-selection: #1d44a0;
+}
+
+@theme inline {
+  --color-background: var(--ui-background);
+  --color-foreground: var(--ui-foreground);
+  --color-primary: var(--ui-primary);
+  --color-primary-foreground: var(--ui-primary-foreground);
+  --color-accent: var(--ui-accent);
+  --color-muted: var(--ui-muted);
+  --color-muted-foreground: var(--ui-muted-foreground);
+  --color-border: var(--ui-border);
+  --color-input: var(--ui-input);
+  --color-ring: var(--ui-ring);
+  --color-selection: var(--ui-selection);
+}

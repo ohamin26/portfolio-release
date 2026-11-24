@@ -1,3 +1,4 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/common/components/ui/table";
 import { compareTabTiming, type TabTiming } from "@/common/data/tab-timing";
 import s from "./manufacturing.module.css";
 
@@ -11,10 +12,20 @@ export function DeviceComparison() {
         <div className={s.device}>
           <span className={s.label} lang="en">A / DESKTOP</span>
           <h3>자재 불출</h3>
-          <table aria-label="데스크톱 자재 불출 예시">
-            <thead><tr><th scope="col">품목</th><th scope="col">불출 수량</th></tr></thead>
-            <tbody><tr><td>{material.name}</td><td>{material.quantity}</td></tr></tbody>
-          </table>
+          <Table aria-label="데스크톱 자재 불출 예시" className="text-[.9rem]">
+            <TableHeader className="bg-muted">
+              <TableRow>
+                <TableHead scope="col">품목</TableHead>
+                <TableHead scope="col" className="text-right">불출 수량</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>{material.name}</TableCell>
+                <TableCell className="text-right font-[650]">{material.quantity}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
         <div className={s.device}>
           <span className={s.label} lang="en">B / TOUCH</span>
