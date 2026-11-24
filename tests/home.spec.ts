@@ -61,6 +61,23 @@ test("탭 전환 전후 시간과 단축률을 공용 측정 조건과 함께 �
   await expect(work).toContainText(timing.conditions);
 });
 
+test("홈의 기기 비교는 모바일에서 표 다음에 터치 예시를, 데스크톱에서는 두 예시를 나란히 보여준다", async ({ page }) => {
+  const work = page.locator("#work");
+  const table = work.getByRole("table", { name: "자재 불출", exact: true });
+  const touch = work.getByText("현장 입력", { exact: true });
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 850 });
+    const desktopBox = (await table.boundingBox())!;
+    const touchBox = (await touch.boundingBox())!;
+    if (width === 390) {
+      expect(touchBox.y).toBeGreaterThanOrEqual(desktopBox.y + desktopBox.height);
+    } else {
+      expect(touchBox.x).toBeGreaterThanOrEqual(desktopBox.x + desktopBox.width);
+      expect(touchBox.y).toBeLessThan(desktopBox.y + desktopBox.height);
+    }
+  }
+});
+
 for (const width of [320, 390, 768, 1440]) {
   test(`${width}px에서 가로 스크롤 없이 홈을 읽을 수 있다`, async ({ page }) => {
     await page.setViewportSize({ width, height: 850 });

@@ -1,10 +1,12 @@
 /* 이 파일을 기준으로 src/ 안의 클래스만 탐색한다. */
 @import "tailwindcss" source("../../");
 
-/* A안의 공용 UI 색. 화면 전용 도해는 각 라우트가 관리한다. */
+/* A안의 공용 디자인 토큰. 화면 배치와 도해는 각 라우트가 관리한다. */
 :root {
   --ui-background: #fff;
   --ui-foreground: #17191c;
+  --ui-body: #434c57;
+  --ui-highlight: #eaf0fd;
   --ui-primary: #171717;
   --ui-primary-foreground: #fff;
   --ui-accent: #f5f5f5;
@@ -17,6 +19,10 @@
 }
 
 @theme inline {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --color-body: var(--ui-body);
+  --color-highlight: var(--ui-highlight);
   --color-background: var(--ui-background);
   --color-foreground: var(--ui-foreground);
   --color-primary: var(--ui-primary);
@@ -28,4 +34,18 @@
   --color-input: var(--ui-input);
   --color-ring: var(--ui-ring);
   --color-selection: var(--ui-selection);
+}
+
+/* A안에서 실제로 달라지는 배치에 이름을 붙이고, 경계값은 한 곳에서 관리한다. */
+@custom-variant home-stack {
+  @media (width <= 800px) { @slot; }
+}
+@custom-variant home-narrow {
+  @media (width <= 550px) { @slot; }
+}
+@custom-variant case-narrow {
+  @media (width <= 600px) { @slot; }
+}
+@custom-variant figure-wide {
+  @media (width > 640px) { @slot; }
 }
