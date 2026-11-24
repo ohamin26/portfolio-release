@@ -17,3 +17,5 @@
 홈은 `cases`의 순서와 제목을, 상세는 `findCaseBySlug(slug)`가 돌려주는 같은 항목을 사용한다. `tabTiming`이 없으면 수치나 그래프를 표시하지 않는다. 있으면 `compareTabTiming`으로 막대 너비와 단축률을 계산하고, 측정 조건을 수치와 함께 보여준다. 소수 자릿수는 표시할 때만 반올림한다.
 
 `/`의 [라우트](../../src/app/page.tsx)는 메타데이터를 제공하고 [HomeScreen](../../src/app/_components/home-screen.tsx)을 연결한다. 프로필·대표 작업·도해와 스타일은 `src/app/_components/`에서 관리한다. `/health`는 화면과 독립된 상태 확인 경로다.
+
+`src/app/work/[slug]/page.tsx`는 공용 사례 목록으로 정적 경로를 생성하고, 사례별 메타데이터를 제공한다. 목록에 없는 slug는 HTTP 404다. 상세의 공통 읽기 화면은 해당 라우트의 `_components/`, 소개 문구는 `_content/`에 둔다. 홈 전용 모듈은 가져오지 않는다.
