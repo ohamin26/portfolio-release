@@ -1,12 +1,7 @@
+import Link from "next/link";
 import { cases } from "@/common/data/cases";
 import { DeviceStudy, TimingStudy } from "./work-figures";
 import s from "./home.module.css";
-
-const fields: Record<string, string> = {
-  "manufacturing-performance": "제조 현장",
-  "payment-recovery": "정비 서비스",
-  "equipment-selection": "산업 모니터링",
-};
 
 export function WorkSection() {
   return (
@@ -19,12 +14,13 @@ export function WorkSection() {
       </div>
       {cases.map((item, index) => {
         const number = String(index + 1).padStart(2, "0");
+        const titleLink = <Link className={s.caseLink} href={`/work/${item.slug}`}>{item.title}</Link>;
         if (item.slug === "manufacturing-performance") {
           return (
             <article className={s.feature} key={item.slug}>
               <div className={s.featureCopy}>
-                <p className={s.eyebrow}>{number}  /  {fields[item.slug]}</p>
-                <h3>{item.title}</h3>
+                <p className={s.eyebrow}>{number}  /  {item.field}</p>
+                <h3>{titleLink}</h3>
                 <p>다른 탭을 잠깐 확인하고 돌아와도 입력한 내용은 남아 있어야 합니다.
                   그 흐름은 유지하면서 보이지 않는 화면까지 다시 그리는 일은 줄였습니다.</p>
                 <p>웹·키오스크·태블릿의 화면 구조도 다시 설계했습니다.
@@ -39,8 +35,8 @@ export function WorkSection() {
         }
         return (
           <article className={s.caseRow} key={item.slug}>
-            <div className={s.caseField}><span className={s.micro}>{number}</span>{fields[item.slug]}</div>
-            <h3>{item.title}</h3>
+            <div className={s.caseField}><span className={s.micro}>{number}</span>{item.field}</div>
+            <h3>{titleLink}</h3>
           </article>
         );
       })}

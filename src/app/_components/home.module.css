@@ -70,6 +70,8 @@
 .measure:last-child { color: var(--blue); }
 .bar { grid-column: 1 / -1; height: 6px; background: currentColor; }
 .caseRow { display: grid; grid-template-columns: minmax(0, 22%) minmax(0, 1fr); gap: 18px; align-items: center; padding-block: 28px; border-top: 1px solid var(--rule); }
+.caseLink { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: underline; text-decoration-color: #aebcd4; text-decoration-thickness: 1px; text-underline-offset: .15em; }
+.caseLink:hover, .caseLink:focus-visible { color: var(--blue); text-decoration-color: currentColor; }
 .caseRow:last-child { border-bottom: 1px solid var(--rule); }
 .caseField { gap: 12px; font-weight: 650; }
 .caseRow h3, .method h2 { font-size: clamp(1.15rem, 1.6vw, 1.55rem); font-weight: 680; line-height: 1.45; letter-spacing: -.045em; }
