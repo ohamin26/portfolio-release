@@ -9,7 +9,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-확인 경로는 http://localhost:3000/health 이며, 정상 응답은 HTTP 200과 JSON `{"status":"ok"}`이다. 홈 화면, API 키, 환경 변수 파일은 필요하지 않다.
+http://localhost:3000 에서 홈을 확인한다. `/health`는 HTTP 200과 JSON `{"status":"ok"}`을 반환한다. 두 경로 모두 API 키나 환경 변수 파일이 필요하지 않다.
 
 ```sh
 pnpm lint
