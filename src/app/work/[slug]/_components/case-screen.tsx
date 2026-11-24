@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/common/components/ui/button";
 import type { PortfolioCase } from "@/common/data/cases";
 import type { CaseIntro } from "../_content/introductions";
+import { EquipmentStudy } from "./equipment-study";
 import { ManufacturingStudy } from "./manufacturing-study";
 import { PaymentStudy } from "./payment-study";
 import s from "./case.module.css";
@@ -26,6 +27,7 @@ export function CaseScreen({ item, intro }: Props) {
           </dl>
           {item.slug === "manufacturing-performance" && <ManufacturingStudy timing={item.tabTiming} />}
           {item.slug === "payment-recovery" && <PaymentStudy />}
+          {item.slug === "equipment-selection" && <EquipmentStudy />}
         </article>
         <nav className={s.returnNav} aria-label="사례 탐색">
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- 목록으로 돌아갈 때 브라우저가 #work에 키보드 포커스도 복원하도록 한다. */}
