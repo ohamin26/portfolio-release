@@ -57,11 +57,9 @@
 .device dl div { display: flex; justify-content: space-between; gap: 6px; padding-top: 5px; font-size: .8rem; }
 .device dt, .figures figcaption { color: var(--muted); }
 .device dd { font-weight: 600; }
-.device table { width: 100%; border-collapse: collapse; font-size: .8rem; }
-.device :where(td, th) { padding-top: 5px; text-align: left; }
-.device th { color: var(--muted); font-weight: 500; }
-.device :where(td, th):last-child { text-align: right; }
-.device td:last-child { font-weight: 600; }
+.device :where(th, td) { padding: 5px 0 0; }
+.device th { font-size: inherit; line-height: inherit; }
+.device tr { border: 0; }
 .figures figcaption { font-size: .8rem; line-height: 1.65; }
 .timing { border-radius: 5px; background: #eaf0fd; }
 .measure { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 5px; margin-block: 12px; color: #525e6d; }

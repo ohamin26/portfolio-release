@@ -1,3 +1,4 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/common/components/ui/table";
 import { compareTabTiming, type TabTiming } from "@/common/data/tab-timing";
 import s from "./home.module.css";
 
@@ -8,10 +9,20 @@ export function DeviceStudy() {
       <div className={s.devices}>
         <div className={s.device}>
           <span className={s.micro} lang="en">01 / DESKTOP</span><strong>자재 불출</strong>
-          <table aria-label="자재 불출">
-            <thead><tr><th scope="col">품목</th><th scope="col">수량</th></tr></thead>
-            <tbody><tr><td>자재 A</td><td>12개</td></tr></tbody>
-          </table>
+          <Table aria-label="자재 불출" className="text-[.8rem]">
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col">품목</TableHead>
+                <TableHead scope="col" className="text-right">수량</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>자재 A</TableCell>
+                <TableCell className="text-right font-semibold">12개</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
         <div className={s.device}>
           <span className={s.micro} lang="en">02 / TOUCH</span><strong>현장 입력</strong>

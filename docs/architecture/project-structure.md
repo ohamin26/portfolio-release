@@ -6,7 +6,7 @@
 | --- | --- |
 | `src/app/` | Next.js App Router의 유일한 시작점. 루트 레이아웃은 전역 CSS를 한 번 불러온다. 루트의 `app/`, `pages/` 또는 `src/pages/`를 병행하지 않는다. |
 | `src/app/<라우트>/_components/` | 해당 화면과 전용 섹션. 화면을 추가할 때 `page.tsx`는 같은 라우트의 Screen을 조립하는 얇은 진입점으로 둔다. 홈은 `src/app/_components/`를 쓴다. |
-| `src/common/components/ui/` | [Button과 buttonVariants](../../src/common/components/ui/button.tsx)가 있다. 동작은 버튼, 이동은 같은 스타일의 링크로 표현한다. |
+| `src/common/components/ui/` | shadcn/ui [Button](../../src/common/components/ui/button.tsx), [RadioGroup](../../src/common/components/ui/radio-group.tsx), [Table](../../src/common/components/ui/table.tsx)을 둔다. 이동은 Button의 `asChild`로 링크 의미를 보존한다. 선택 상태·표 데이터는 라우트에서 관리한다. |
 | `src/common/data/` | [사례 목록과 slug 조회](../../src/common/data/cases.ts), [탭 전환 시간 비교](../../src/common/data/tab-timing.ts). 화면별 설명·도해는 여기에 넣지 않는다. |
 | `src/common/styles/globals.css` | Tailwind v4 진입점이자 shadcn의 스타일 대상. 클래스 탐색은 `src/`로 한정한다. |
 

@@ -1,4 +1,4 @@
-import { buttonVariants } from "@/common/components/ui/button";
+import { Button } from "@/common/components/ui/button";
 import { LinkedInLink } from "./linkedin-link";
 import { SystemStudy } from "./system-study";
 import s from "./home.module.css";
@@ -14,7 +14,9 @@ export function ProfileSection() {
           같은 업무라도 누가, 어디서 쓰느냐에 따라 화면이 어떻게 달라져야 하는지 고민합니다.
         </p>
         <div className={s.actions}>
-          <a className={buttonVariants()} href="#work">대표 작업 보기 <span aria-hidden="true">→</span></a>
+          <Button asChild>
+            <a href="#work">대표 작업 보기 <span aria-hidden="true">→</span></a>
+          </Button>
           <LinkedInLink>LinkedIn</LinkedInLink>
         </div>
       </div>
