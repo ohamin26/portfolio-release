@@ -1,0 +1,2 @@
+/* 이 파일을 기준으로 src/ 안의 클래스만 탐색한다. */
+@import "tailwindcss" source("../../");

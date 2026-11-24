@@ -10,7 +10,22 @@ export default defineConfig([
   ]),
   js.configs.recommended,
   {
-    files: ["**/*.{ts,tsx}"],
-    extends: [tseslint.configs.recommended, next.configs["core-web-vitals"]],
+    files: ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}", "*.config.ts"],
+    extends: [tseslint.configs.recommended],
+  },
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    extends: [next.configs["core-web-vitals"]],
+  },
+  {
+    files: ["src/common/**/*.{ts,tsx,js,jsx,mjs}"],
+    rules: {
+      "no-restricted-imports": ["error", {
+        patterns: [{
+          regex: "^(?:@/|(?:\\.\\.?/)+(?:src/)?)app(?:/|$)",
+          message: "공용 모듈에서 라우트 전용 코드를 가져올 수 없습니다.",
+        }],
+      }],
+    },
   },
 ]);
