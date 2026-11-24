@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/common/components/ui/radio-group";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/common/components/ui/table";
-import s from "./equipment.module.css";
+import { cn } from "@/common/lib/utils";
+import { figureFrame, studyLabel } from "./study-styles";
 
 const equipment = ["설비 A", "설비 B"] as const;
 const scopes = ["전체 설비", ...equipment] as const;
@@ -14,14 +15,15 @@ const samples = [
   { time: "10:00", counts: { "설비 A": 18, "설비 B": 7 } },
 ] as const;
 const axisMax = 30;
+const resultCard = "min-w-0 rounded-sm border border-border bg-background p-[clamp(14px,2vw,24px)]";
 
 export function EquipmentExplorer() {
   const [scope, setScope] = useState<Scope>("전체 설비");
   const visibleEquipment = equipment.filter((name) => scope === "전체 설비" || name === scope);
 
   return (
-    <div className={s.explorer}>
-      <p className={s.kicker}>예시 데이터</p>
+    <div className={cn(figureFrame, "bg-muted")}>
+      <p className={studyLabel}>예시 데이터</p>
       <div className="mt-1.5 min-w-0">
         <h3 id="scope-title" className="text-[1.2rem] font-bold">설비 선택</h3>
         <p id="scope-hint" className="mt-1 leading-[1.65] text-muted-foreground">
@@ -58,26 +60,28 @@ export function EquipmentExplorer() {
         </RadioGroup>
       </div>
       <p className="sr-only" role="status">{scope} 기준으로 차트와 표를 표시합니다.</p>
-      <div className={s.results}>
-        <figure className={s.card}>
-          <figcaption>{scope} · 시간대별 수집 건수</figcaption>
-          <dl className={s.plot}>
+      <div className="grid grid-cols-1 items-start gap-3.5 figure-wide:grid-cols-2">
+        <figure className={resultCard}>
+          <figcaption className="mb-4 text-left font-[680]">{scope} · 시간대별 수집 건수</figcaption>
+          <dl className="space-y-3 tabular-nums">
             {samples.map(({ time, counts }) => {
               const total = visibleEquipment.reduce((sum, name) => sum + counts[name], 0);
               return (
                 <div key={time}>
-                  <dt>{time}</dt>
-                  <dd>
-                    <span className={s.track} aria-hidden="true"><span style={{ width: `${total / axisMax * 100}%` }} /></span>
+                  <dt className="text-[.875rem] text-muted-foreground">{time}</dt>
+                  <dd className="grid grid-cols-[minmax(0,1fr)_4ch] items-center gap-3 text-right font-[650] whitespace-nowrap">
+                    <span className="block h-2 bg-[#e8ecf2]" aria-hidden="true">
+                      <span className="block h-full bg-ring" style={{ width: `${total / axisMax * 100}%` }} />
+                    </span>
                     {total}건
                   </dd>
                 </div>
               );
             })}
           </dl>
-          <p className={s.scale}>차트 눈금: 0–{axisMax}건</p>
+          <p className="mt-4 text-[.875rem] text-muted-foreground">차트 눈금: 0–{axisMax}건</p>
         </figure>
-        <div className={s.card}>
+        <div className={resultCard}>
           <Table className="tabular-nums">
             <TableCaption>{scope} · 수집 내역</TableCaption>
             <TableHeader>
