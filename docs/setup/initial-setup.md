@@ -18,6 +18,6 @@ pnpm build
 pnpm test
 ```
 
-Playwright가 프로덕션 빌드를 루프백 주소에서 시작하여 HTTP 응답을 검사한다. 이 단계는 브라우저를 띄우지 않으므로 브라우저 바이너리 설치가 필요 없다. 기본 포트 4177이 사용 중이면 `PORTFOLIO_TEST_PORT=4187 pnpm test`로 실행한다. PR 검사도 같은 순서로 실행하며 배포하지 않는다.
+`pnpm test`는 먼저 라우트 위치와 공용 모듈의 의존 방향을 검사한다. 이어서 Playwright가 프로덕션 빌드를 루프백 주소에서 시작하여 HTTP 응답을 검사한다. 이 단계는 브라우저를 띄우지 않으므로 브라우저 바이너리 설치가 필요 없다. 기본 포트 4177이 사용 중이면 `PORTFOLIO_TEST_PORT=4187 pnpm test`로 실행한다. PR 검사도 같은 순서로 실행하며 배포하지 않는다.
 
 ESLint는 JavaScript 기본 규칙, TypeScript 권장 규칙, Next.js의 Core Web Vitals 규칙을 사용한다.
