@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { cases } from "@/common/data/cases";
 
 for (const item of cases) {
@@ -25,14 +25,34 @@ test("직접 연 사례마다 고유한 문서 제목과 설명이 있다", asyn
   expect(descriptions.size).toBe(cases.length);
 });
 
-test("상세 주소로 바로 온 방문자도 키보드로 홈의 대표 작업 목록에 돌아간다", async ({ page }) => {
-  await page.goto(`/work/${cases[0].slug}`);
+async function returnToWorkByKeyboard(page: Page) {
+  const list = page.locator("#work");
   const back = page.getByRole("link", { name: "대표 작업 목록으로" });
-  await back.focus();
-  await page.keyboard.press("Enter");
+  await expect(back).toHaveAttribute("href", "/#work");
+  await back.press("Enter");
   await expect(page).toHaveURL("/#work");
-  await expect(page.locator("#work")).toBeInViewport();
-  await expect(page.locator("#work")).toBeFocused();
+  await expect(list.getByRole("heading", { name: "대표 작업", exact: true })).toBeInViewport();
+  await expect(list).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(list.getByRole("link", { name: cases[0].title })).toBeFocused();
+}
+
+test("직접 주소로 연 사례에서 키보드로 복귀하면 대표 작업 목록부터 탐색을 이어간다", async ({ page }) => {
+  await page.goto(`/work/${cases[0].slug}`);
+  await returnToWorkByKeyboard(page);
+});
+
+test("홈에서 연 설비 사례를 조작한 뒤 새 문서 로드 없이 키보드로 대표 작업 목록에 복귀한다", async ({ page }) => {
+  await page.goto("/");
+  const item = cases.find(({ slug }) => slug === "equipment-selection")!;
+  await page.locator("#work").getByRole("link", { name: item.title }).press("Enter");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(item.title);
+  await page.getByRole("radio", { name: "설비 A", exact: true }).click();
+  await expect(page.getByRole("table", { name: "설비 A · 수집 내역" })).toBeVisible();
+
+  const documentStart = await page.evaluate(() => performance.timeOrigin);
+  await returnToWorkByKeyboard(page);
+  expect(await page.evaluate(() => performance.timeOrigin)).toBe(documentStart);
 });
 
 test("등록되지 않은 사례 주소는 HTTP 404를 반환한다", async ({ request }) => {

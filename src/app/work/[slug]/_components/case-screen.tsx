@@ -34,8 +34,7 @@ export function CaseScreen({ item, intro }: Props) {
         </article>
         <nav className="border-t border-border pt-6 pb-12" aria-label="사례 탐색">
           <Button asChild variant="outline" className="focus-visible:outline-offset-4">
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- 목록으로 돌아갈 때 브라우저가 #work에 키보드 포커스도 복원하도록 한다. */}
-            <a href="/#work"><span aria-hidden="true">←</span> 대표 작업 목록으로</a>
+            <Link href="/#work"><span aria-hidden="true">←</span> 대표 작업 목록으로</Link>
           </Button>
         </nav>
       </main>

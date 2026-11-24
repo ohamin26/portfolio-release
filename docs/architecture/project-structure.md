@@ -19,3 +19,10 @@
 `/`의 [라우트](../../src/app/page.tsx)는 메타데이터를 제공하고 [HomeScreen](../../src/app/_components/home-screen.tsx)을 연결한다. 프로필·대표 작업·도해와 스타일은 `src/app/_components/`에서 관리한다. `/health`는 화면과 독립된 상태 확인 경로다.
 
 `src/app/work/[slug]/page.tsx`는 공용 사례 목록으로 정적 경로를 생성하고, 사례별 메타데이터를 제공한다. 목록에 없는 slug는 HTTP 404다. 상세의 공통 읽기 화면은 해당 라우트의 `_components/`, 소개 문구는 `_content/`에 둔다. 홈 전용 모듈은 가져오지 않는다.
+
+## 링크·이미지 선택 기준
+
+- 다른 페이지로 이동할 때는 `next/link`를 우선한다. 사례 제목, 상세 상단의 홈 링크, 상세에서 홈 목록으로 돌아가는 `/#work`가 여기에 해당한다. 버튼처럼 보이는 링크도 `Button asChild` 안에 링크 하나만 둔다.
+- 같은 문서 안의 `#work`, `#contact`, 본문 바로가기와 외부 LinkedIn 주소는 기본 `<a href>`를 사용한다.
+- 상세에서 목록으로 돌아오면 제목이 보이는 것만으로는 부족하다. [WorkRegion](../../src/app/_components/work-region.tsx)은 `#work` 진입 시 포커스가 본문(body)에 남았을 때만 목록에 포커스를 준다. 스크롤은 Link에 맡긴다. 목록 내용은 서버 컴포넌트로 유지한다.
+- 현재 화면에는 최적화할 사진 파일이 없다. 프로필 사진이나 프로젝트 스크린샷을 콘텐츠로 추가할 때는 `next/image` 적용을 검토한다. 인라인 SVG와 HTML 도표는 이미지로 바꾸지 않는다.
