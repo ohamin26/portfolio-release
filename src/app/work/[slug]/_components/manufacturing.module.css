@@ -1,0 +1,40 @@
+.chapter {
+  border-top: 1px solid #d7dbdf;
+  margin-top: clamp(32px, 5vw, 64px);
+  padding-top: clamp(28px, 4vw, 56px);
+}
+.label { color: #2454c6; font: 600 .73rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .04em; }
+.chapter h2 { margin-block: 8px 16px; font-size: clamp(1.65rem, 3.2vw, 2.8rem); font-weight: 710; line-height: 1.32; letter-spacing: -.055em; }
+.copy { max-width: 46rem; color: #434c57; line-height: 1.8; }
+.figure, .trace { border-radius: 6px; padding: clamp(16px, 2.5vw, 30px); margin-top: 24px; }
+.figure { background: #f5f6f8; }
+.trace { background: #eaf0fd; }
+.figure figcaption, .trace figcaption { margin-top: 16px; color: #535b66; font-size: .84rem; line-height: 1.6; }
+.figure + .copy { margin-top: 20px; }
+
+.devices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.device { padding: clamp(14px, 2vw, 22px); border: 1px solid #d7dbdf; border-radius: 4px; background: white; }
+.device h3 { margin-block: 4px 12px; font-size: 1.1rem; font-weight: 680; }
+.device table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.device :where(th, td) { padding: 8px; text-align: left; }
+.device th { background: #f5f6f8; font-weight: 550; }
+.device :where(th, td):last-child { text-align: right; }
+.device td { border-bottom: 1px solid #d7dbdf; }
+.device td:last-child, .touchFields dd { font-weight: 650; }
+.touchFields { display: grid; gap: 6px; font-size: .9rem; }
+.touchFields div { display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; }
+.touchFields div:last-child { background: #eaf0fd; color: #20439a; }
+
+.comparison { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: clamp(22px, 5vw, 70px); margin-top: 16px; }
+.result { color: #2454c6; font-size: clamp(1.7rem, 3.5vw, 3.25rem); line-height: 1.2; font-weight: 700; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.rows { display: grid; gap: 14px; }
+.row { position: relative; padding-bottom: 12px; display: grid; grid-template-columns: 1fr auto; gap: 5px; align-items: baseline; font-size: .85rem; }
+.row dd { font: 600 .95rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; }
+.track { position: absolute; inset: auto 0 0; height: 7px; background: #d4dceb; }
+.track > span { display: block; height: 100%; background: #737f90; }
+.row:last-child .track > span { background: #2454c6; }
+@media (max-width: 640px) {
+  .devices, .comparison { grid-template-columns: minmax(0, 1fr); }
+  .devices { gap: 10px; }
+  .comparison { gap: 20px; }
+}
