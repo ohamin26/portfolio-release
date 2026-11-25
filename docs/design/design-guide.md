@@ -6,6 +6,15 @@
 - 키보드 포커스가 보이고, 모션 감소 설정에서도 모든 정보와 행동을 제공한다. 자동 재생이나 스크롤 가로채기는 사용하지 않는다.
 - 공용 UI는 shadcn/ui를, 화면 배치와 반응형은 Tailwind CSS를 사용한다. 공용 버튼은 최소 높이 44px, 키보드 포커스 테두리, 모션 감소 지원을 기본으로 한다. 페이지 이동에는 버튼 대신 같은 스타일의 링크를 쓴다.
 
+## 홈 A안과 공개 홈의 차이
+
+[홈 A안 결정 기록](https://github.com/ohamin26/portfolio-release/issues/4)의 프로필 우선 순서를 따른다. 아래 두 항목은 [#30](https://github.com/ohamin26/portfolio-release/issues/30)에서 기획 초안과 보관된 A안 데스크톱·모바일 시안을 대조해 정리했다. 원격 Figma 최신본은 확인하지 못했다.
+
+| 항목 | 초안과 보관 시안에서 확인한 점 | 공개 홈에 적용할 기준 |
+| --- | --- | --- |
+| 프로필 소속 | 기획 초안에는 소속 항목이 있고, 두 시안에서는 이름 옆에 소속이 보인다. 시안 선택과 소속명의 공개 승인은 별개다. | 별도 공개 승인이 확인되지 않아 소속은 표시하지 않는다. 데스크톱·모바일 모두 이름과 직무가 소개의 중심이다. |
+| 후속 사례의 한 줄 요약 | 초안에는 한 줄 설명이 있지만, 두 시안의 후속 행에는 제목과 별도의 설명 문장이 없다. | 시안의 짧은 목록을 유지한다. 분야와 제목을 좁은 화면에서 위아래로 배치하되 요약 문단은 추가하지 않는다. |
+
 ## 공용 UI 적용 기준
 
 [설정](../../components.json)은 `new-york`·`neutral`이며 Tailwind v4용 공식 레지스트리 [Button](https://ui.shadcn.com/r/styles/new-york-v4/button.json) · [RadioGroup](https://ui.shadcn.com/r/styles/new-york-v4/radio-group.json) · [Table](https://ui.shadcn.com/r/styles/new-york-v4/table.json)을 프로젝트에 복사해 A안에 맞췄다. [원본 라이선스](../licenses/shadcn-ui.md)를 함께 보관한다.
