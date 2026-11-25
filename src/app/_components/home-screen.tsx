@@ -1,3 +1,4 @@
+import { PortfolioMark } from "@/common/components/ui/icons/portfolio-mark";
 import { ProfileSection } from "./profile-section";
 import { WorkSection } from "./work-section";
 import { LinkedInLink } from "./linkedin-link";
@@ -11,10 +12,7 @@ export function HomeScreen() {
       <a className="absolute top-2 left-4 z-1 -translate-y-[180%] bg-background px-[18px] py-3 focus:translate-y-0" href="#main-content">본문 바로가기</a>
       <header className="flex items-center justify-between gap-3 border-b border-border py-[clamp(12px,2vw,28px)] home-narrow:flex-wrap home-narrow:gap-x-1.5 home-narrow:gap-y-0">
         <a className="flex min-h-11 items-center gap-2 text-[1.32rem] font-[740] tracking-[-.055em] home-narrow:text-[1.08rem]" href="#profile">
-          <svg className="text-ring home-narrow:size-[25px]" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-            <rect width="28" height="28" rx="6" fill="currentColor" />
-            <path d="M5 16l6-7h2v6l-6 7H5zm10-3 6-7h2v7l-6 7h-2z" fill="white" />
-          </svg>
+          <PortfolioMark className="text-ring home-narrow:size-[25px]" />
           오하민
         </a>
         <nav className="flex flex-wrap items-center gap-[clamp(6px,2vw,30px)] home-narrow:gap-[5px]" aria-label="주요 탐색">

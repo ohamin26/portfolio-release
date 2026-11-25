@@ -27,7 +27,7 @@ test("직접 연 사례마다 고유한 문서 제목과 설명이 있다", asyn
 
 async function returnToWorkByKeyboard(page: Page) {
   const list = page.locator("#work");
-  const back = page.getByRole("link", { name: "대표 작업 목록으로" });
+  const back = page.getByRole("link", { name: "대표 작업 목록으로", exact: true });
   await expect(back).toHaveAttribute("href", "/#work");
   await back.press("Enter");
   await expect(page).toHaveURL("/#work");

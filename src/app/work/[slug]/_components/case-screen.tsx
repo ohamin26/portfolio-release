@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/common/components/ui/button";
+import { NavigationArrow } from "@/common/components/ui/icons/navigation-arrow";
 import type { PortfolioCase } from "@/common/data/cases";
 import type { CaseIntro } from "../_content/introductions";
 import { EquipmentStudy } from "./equipment-study";
@@ -34,7 +35,7 @@ export function CaseScreen({ item, intro }: Props) {
         </article>
         <nav className="border-t border-border pt-6 pb-12" aria-label="사례 탐색">
           <Button asChild variant="outline" className="focus-visible:outline-offset-4">
-            <Link href="/#work"><span aria-hidden="true">←</span> 대표 작업 목록으로</Link>
+            <Link href="/#work"><NavigationArrow direction="left" /> 대표 작업 목록으로</Link>
           </Button>
         </nav>
       </main>
