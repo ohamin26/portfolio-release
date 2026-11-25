@@ -6,12 +6,19 @@ test.beforeEach(async ({ page }) => {
   expect(response?.status()).toBe(200);
 });
 
-test("소개에서 대표 작업, AI 작업 방식, 연락 순으로 읽는다", async ({ page }) => {
-  await expect(page.locator("#profile").getByRole("heading", { level: 1 })).toContainText("오하민");
+test("모바일 첫 화면의 소개에서 대표 작업과 AI 작업 방식을 지나 연락으로 이동한다", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const profile = page.locator("#profile");
+  const title = profile.getByRole("heading", { level: 1 });
+  await expect(title).toContainText("오하민");
+  await expect(title).toBeInViewport();
   const sections = page.locator("#profile, #work, #method, #contact");
   expect(await sections.evaluateAll((nodes) => nodes.map(({ id }) => id)))
     .toEqual(["profile", "work", "method", "contact"]);
   await expect(page.locator("#method")).toContainText("에이전트");
+  await page.getByRole("navigation", { name: "주요 탐색" }).getByRole("link", { name: "연락", exact: true }).click();
+  await expect(page).toHaveURL(/\/#contact$/);
+  await expect(page.locator("#contact").getByRole("link", { name: "LinkedIn에서 연락하기" })).toBeInViewport();
 });
 
 test("헤더 로고는 별도 포커스를 받지 않고 프로필 도해는 좁은 화면에서 숨겨진다", async ({ page }) => {
@@ -55,12 +62,25 @@ test("프로필과 연락 영역이 같은 LinkedIn 프로필로 연결된다", 
   }
 });
 
-test("대표 작업에 공용 목록의 모든 사례 제목이 표시된다", async ({ page }) => {
-  const work = page.locator("#work");
-  for (const item of cases) {
-    await expect(work.getByText(item.title, { exact: true })).toBeVisible();
-  }
-});
+for (const width of [390, 1280]) {
+  test(`${width}px 홈에서 프로필 표기와 세 사례 링크, 후속 두 행의 문구를 확인한다`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    const profileLabel = page.locator("#profile").getByText(/^PROFILE\s*\//);
+    await expect(profileLabel).toHaveText("PROFILE / OH HAMIN");
+    const rows = page.locator("#work").getByRole("article");
+    await expect(rows).toHaveCount(cases.length);
+    for (const [index, item] of cases.entries()) {
+      const row = rows.nth(index);
+      const link = row.getByRole("link", { name: item.title, exact: true });
+      await expect(link).toBeVisible();
+      await expect(link).toHaveAttribute("href", `/work/${item.slug}`);
+      if (index > 0) {
+        const number = String(index + 1).padStart(2, "0");
+        await expect(row).toHaveText(`${number} ${item.field} ${item.title}`, { useInnerText: true });
+      }
+    }
+  });
+}
 
 test("홈의 기기 비교는 모바일에서 표 다음에 터치 예시를, 데스크톱에서는 두 예시를 나란히 보여준다", async ({ page }) => {
   const work = page.locator("#work");
