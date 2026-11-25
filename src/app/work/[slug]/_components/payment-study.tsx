@@ -8,8 +8,8 @@ export function PaymentStudy() {
       <StudyChapter id="purchase-policy-title" label="01 / PURCHASE POLICY" title="담을 때와 주문할 때, 살 수 있는 수량이 달라진다면">
         <p className={studyCopy}>
           상품을 담은 뒤 재고가 줄어들 수 있습니다. 사용자 웹에서는 장바구니에서 주문을 시작할 때
-          목록을 다시 받아, 선택한 상품을 여전히 같은 수량만큼 살 수 있는지 비교했습니다.
-          구매 가능 수량이 달라졌다면 결제창을 열기 전에 바뀐 수량을 확인하도록 했습니다.
+          목록을 다시 받아, 선택한 상품을 여전히 같은 수량만큼 살 수 있는지 비교합니다.
+          구매 가능 수량이 달라졌다면 결제창을 열기 전에 바뀐 수량을 확인하도록 안내합니다.
         </p>
         <PurchaseSteps />
       </StudyChapter>

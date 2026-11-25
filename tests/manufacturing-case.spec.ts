@@ -11,6 +11,8 @@ test("기기별 입력 예시는 같은 품목과 수량을 담고 모바일에�
   const architecture = page.getByRole("article").locator("section").filter({ has: page.getByRole("table") });
   await expect(architecture.getByRole("heading", { level: 2 })).toBeVisible();
   const figure = architecture.getByRole("figure");
+  await expect(figure).toHaveAccessibleName(/화면 비교 예시/);
+  await expect(figure.locator("button, input, select, textarea, [contenteditable=true], [role=button], [role=spinbutton], [role=textbox]")).toHaveCount(0);
   const desktop = figure.getByRole("table");
   await expect(desktop.getByRole("cell", { name: "자재 A", exact: true })).toBeVisible();
   await expect(desktop.getByRole("cell", { name: "12개", exact: true })).toBeVisible();

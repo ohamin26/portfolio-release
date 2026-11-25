@@ -12,7 +12,7 @@ const fieldRow = "flex justify-between gap-1.5 pt-[5px] text-[.8rem]";
 export function DeviceStudy() {
   return (
     <figure className={`${figureFrame} bg-muted`}>
-      <div className={microLabel} lang="en">FIG. 02  /  SHARED VALIDATION</div>
+      <div className={microLabel} lang="en">FIG. 02  /  DEVICE COMPARISON</div>
       <div className="my-2.5 grid grid-cols-2 gap-3 home-narrow:grid-cols-1">
         <div className={deviceCard}>
           <span className={microLabel} lang="en">01 / DESKTOP</span><strong className={deviceTitle}>자재 불출</strong>

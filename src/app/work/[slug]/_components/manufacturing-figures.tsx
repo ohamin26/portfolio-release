@@ -12,7 +12,7 @@ const touchRow = "flex justify-between gap-2 px-2.5 py-[7px]";
 export function DeviceComparison() {
   return (
     <figure className={cn(figureFrame, "bg-muted")}>
-      <p className={studyLabel} lang="en">FIG. 01 / SHARED VALIDATION</p>
+      <p className={studyLabel} lang="en">FIG. 01 / DEVICE COMPARISON</p>
       <div className="mt-3.5 grid grid-cols-1 gap-2.5 figure-wide:grid-cols-2 figure-wide:gap-3.5">
         <div className={deviceCard}>
           <span className={studyLabel} lang="en">A / DESKTOP</span>
@@ -41,7 +41,7 @@ export function DeviceComparison() {
           </dl>
         </div>
       </div>
-      <figcaption className={figureCaption}>같은 품목과 수량을 표와 터치 입력 화면으로 재구성한 예시</figcaption>
+      <figcaption className={figureCaption}>기기별 화면 비교 예시 · 같은 자재 수량을 데스크톱 표와 터치 화면으로 표현한 도해</figcaption>
     </figure>
   );
 }

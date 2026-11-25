@@ -25,6 +25,22 @@ test("직접 연 사례마다 고유한 문서 제목과 설명이 있다", asyn
   expect(descriptions.size).toBe(cases.length);
 });
 
+test("각 상세의 ‘내 역할’에는 해당 사례에서 맡은 작업을 표시한다", async ({ page }) => {
+  const roleTopics = {
+    "manufacturing-performance": ["설비 수리", "기기별", "탭"],
+    "payment-recovery": ["사용자 웹", "선주문 취소", "주문 완료"],
+    "scada-interaction": ["도면", "차트와 표", "조회"],
+  } satisfies Record<(typeof cases)[number]["slug"], string[]>;
+
+  for (const { slug } of cases) {
+    await page.goto(`/work/${slug}`);
+    const term = page.getByRole("term").filter({ hasText: /^내 역할$/ });
+    const role = term.locator("+ dd");
+    await expect(role).toBeVisible();
+    for (const topic of roleTopics[slug]) await expect(role).toContainText(topic);
+  }
+});
+
 async function returnToWorkByKeyboard(page: Page) {
   const list = page.locator("#work");
   const back = page.getByRole("link", { name: "대표 작업 목록으로", exact: true });

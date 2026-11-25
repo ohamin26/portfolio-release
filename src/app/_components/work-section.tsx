@@ -24,8 +24,8 @@ export function WorkSection() {
                 <h3 className="mt-4 mb-5 text-[clamp(1.9rem,2.85vw,2.55rem)] font-[720] leading-[1.37] tracking-[-.055em]">{titleLink}</h3>
                 <p className={bodyCopy}>다른 탭을 잠깐 확인하고 돌아와도 입력한 내용은 남아 있어야 합니다.
                   그 흐름은 유지하면서 보이지 않는 화면까지 다시 그리는 일은 줄였습니다.</p>
-                <p className={`mt-4 ${bodyCopy}`}>웹·키오스크·태블릿의 화면 구조도 다시 설계했습니다.
-                  자재 수량을 확인하는 규칙은 함께 쓰고, 입력 방식은 마우스와 터치에 맞게 나눴습니다.</p>
+                <p className={`mt-4 ${bodyCopy}`}>설비 수리 화면을 태블릿으로 확장하면서 화면 구조도 다시 설계했습니다.
+                  수리 목록을 불러오는 로직은 그대로 쓰고, 목록을 보고 조작하는 방식은 기기에 맞게 나눴습니다.</p>
               </div>
               <div className="grid gap-3.5">
                 <DeviceStudy />

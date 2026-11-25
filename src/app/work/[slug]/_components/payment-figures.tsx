@@ -20,7 +20,7 @@ const checkoutBranches = [
   },
   {
     title: "승인 후 주문 완료 실패",
-    body: "결제는 승인됐지만 주문 완료 요청에서 오류가 발생했습니다. 주문 완료 화면으로 이동하지 않습니다.",
+    body: "결제 승인 후 주문 완료 요청이 실패하면 오류를 안내합니다. 주문 완료 화면으로 이동하지 않습니다.",
     outcome: "주문 완료 처리 오류 안내",
   },
 ];
@@ -66,7 +66,7 @@ export function CheckoutBranches() {
           </li>
         ))}
       </ul>
-      <figcaption className={figureCaption}>카드 결제 승인 전후, 주문을 처리하는 세 가지 경로</figcaption>
+      <figcaption className={figureCaption}>카드 결제 승인 전후의 주문 처리 예시 · 세 가지 경로</figcaption>
     </figure>
   );
 }

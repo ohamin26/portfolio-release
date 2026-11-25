@@ -31,7 +31,8 @@ test("장바구니를 다시 조회할 때와 승인 직전의 수량·가격 �
 });
 
 test("승인 전 검증이 실패하면 선주문 취소를 요청하는 경로를 보여준다", async ({ page }) => {
-  const branch = card(page, beforeApproval);
+  const flow = page.getByRole("figure", { name: /주문 처리 예시/ });
+  const branch = flow.getByRole("listitem").filter({ has: page.getByRole("heading", { name: beforeApproval }) });
   await expect(branch).toContainText("결제 승인을 요청하지 않습니다");
   await expect(branch).toContainText(/선주문 취소(를)? 요청/);
   await expect(branch).not.toContainText(/취소 완료|환불 완료/);
