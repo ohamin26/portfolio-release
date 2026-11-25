@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { tabThroughLinks } from "./helpers/keyboard";
 import { cases } from "@/common/data/cases";
 
 for (const item of cases) {
@@ -49,16 +50,16 @@ async function returnToWorkByKeyboard(page: Page) {
   await expect(page).toHaveURL("/#work");
   await expect(list.getByRole("heading", { name: "대표 작업", exact: true })).toBeInViewport();
   await expect(list).toBeFocused();
-  await page.keyboard.press("Tab");
+  await tabThroughLinks(page);
   await expect(list.getByRole("link", { name: cases[0].title })).toBeFocused();
 }
 
-test("직접 주소로 연 사례에서 키보드로 복귀하면 대표 작업 목록부터 탐색을 이어간다", async ({ page }) => {
+test("직접 주소로 연 사례에서 키보드로 복귀하면 대표 작업 목록부터 탐색을 이어간다", { tag: "@cross-browser" }, async ({ page }) => {
   await page.goto(`/work/${cases[0].slug}`);
   await returnToWorkByKeyboard(page);
 });
 
-test("홈에서 연 도면 요소를 선택한 뒤 새 문서 로드 없이 키보드로 대표 작업 목록에 복귀한다", async ({ page }) => {
+test("홈에서 연 도면 요소를 선택한 뒤 새 문서 로드 없이 키보드로 대표 작업 목록에 복귀한다", { tag: "@cross-browser" }, async ({ page }) => {
   await page.goto("/");
   const item = cases.find(({ slug }) => slug === "scada-interaction")!;
   await page.locator("#work").getByRole("link", { name: item.title }).press("Enter");

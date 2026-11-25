@@ -10,6 +10,11 @@ export default defineConfig({
   testDir: "./tests",
   testMatch: "**/*.spec.ts",
   use: { baseURL },
+  projects: [
+    { name: "chromium", use: { browserName: "chromium" } },
+    { name: "firefox", use: { browserName: "firefox" }, grep: /@cross-browser/ },
+    { name: "webkit", use: { browserName: "webkit" }, grep: /@cross-browser/ },
+  ],
   webServer: {
     command: `pnpm run start --hostname 127.0.0.1 --port ${port}`,
     url: `${baseURL}/health`,

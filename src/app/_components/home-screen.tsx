@@ -1,3 +1,4 @@
+import { SkipLink } from "@/common/components/ui/skip-link";
 import { PortfolioMark } from "@/common/components/ui/icons/portfolio-mark";
 import { ProfileSection } from "./profile-section";
 import { WorkSection } from "./work-section";
@@ -9,7 +10,7 @@ const navLink = "flex min-h-11 min-w-11 items-center justify-center text-[.875re
 export function HomeScreen() {
   return (
     <div className="mx-auto w-[min(1264px,88%)] font-sans break-keep wrap-anywhere text-foreground home-stack:w-[calc(100%-48px)] [@media(max-width:359px)]:w-[calc(100%-32px)] [&_:where(a,[tabindex]):focus-visible]:outline-2 [&_:where(a,[tabindex]):focus-visible]:outline-offset-4 [&_:where(a,[tabindex]):focus-visible]:outline-ring">
-      <a className="absolute top-2 left-4 z-1 -translate-y-[180%] bg-background px-[18px] py-3 focus:translate-y-0" href="#main-content">본문 바로가기</a>
+      <SkipLink />
       <header className="flex items-center justify-between gap-3 border-b border-border py-[clamp(12px,2vw,28px)] home-narrow:flex-wrap home-narrow:gap-x-1.5 home-narrow:gap-y-0">
         <a className="flex min-h-11 items-center gap-2 text-[1.32rem] font-[740] tracking-[-.055em] home-narrow:text-[1.08rem]" href="#profile">
           <PortfolioMark className="text-ring home-narrow:size-[25px]" />
