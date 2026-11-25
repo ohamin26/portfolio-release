@@ -8,7 +8,7 @@
 | `src/app/<라우트>/_components/` | 해당 화면과 전용 섹션. 화면을 추가할 때 `page.tsx`는 같은 라우트의 Screen을 조립하는 얇은 진입점으로 둔다. 홈은 `src/app/_components/`를 쓴다. |
 | `src/common/components/ui/` | shadcn/ui [Button](../../src/common/components/ui/button.tsx), [RadioGroup](../../src/common/components/ui/radio-group.tsx), [Table](../../src/common/components/ui/table.tsx)을 둔다. 이동은 Button의 `asChild`로 링크 의미를 보존한다. 선택 상태·표 데이터는 라우트에서 관리한다. |
 | `src/common/components/ui/icons/` | 로고·일러스트의 SVG와 탐색 화살표의 모양을 관리한다. 배치·캡션·링크 동작은 사용하는 화면에 둔다. |
-| `src/common/data/` | [사례 목록과 slug 조회](../../src/common/data/cases.ts), [탭 전환 시간 비교](../../src/common/data/tab-timing.ts). 화면별 설명·도해는 여기에 넣지 않는다. |
+| `src/common/data/` | [사례 목록과 slug 조회](../../src/common/data/cases.ts), [탭 표시 감지 시간 비교](../../src/common/data/tab-timing.ts). 화면별 설명·도해는 여기에 넣지 않는다. |
 | `src/common/styles/globals.css` | Tailwind v4 진입점이자 shadcn의 스타일 대상. 클래스 탐색은 `src/`로 한정한다. |
 
 라우트에서 공용 코드는 `@/common/…`로 가져오고, 같은 라우트의 전용 코드는 `./_components/…`로 가져온다. 다른 화면의 전용 모듈을 직접 가져오지 않는다. 두 화면이 같은 기능을 써야 한다면 공용 부분만 추출한다. ESLint는 `src/common/`에서 `src/app/`으로의 정적 import와 재수출을 검사한다.
