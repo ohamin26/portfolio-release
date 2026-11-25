@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# 새 clone의 로컬 인계 준비만 검사한다. 설치·에이전트 실행·원격 권한 검사는 하지 않는다.
+set -eu
+fail() { printf '준비 안 됨: %s\n' "$1" >&2; exit 1; }
+root=$(cd "$(dirname "$0")/.." && pwd -P)
+cd "$root"
+runner=${ORCHESTRATOR_BIN:-"$root/../orchestrator/bin/orchestrator"}
+[[ "$runner" = /* && -f "$runner" && -x "$runner" ]] || fail '공유 실행기의 절대 실행 경로(ORCHESTRATOR_BIN)를 확인하세요.'
+[[ -r orchestration.config.yml ]] || fail '루트의 orchestration.config.yml이 필요합니다.'
+[[ -s prompts/templates/agent-task.md ]] || fail 'prompts/templates/agent-task.md가 없거나 비어 있습니다.'
+for cmd in git ruby tmux gh; do
+  command -v "$cmd" >/dev/null || fail "$cmd 실행 파일이 없습니다."
+done
+# 실행기가 설치·검증에 사용하는 것과 같은 종류의 셸에서 조회한다.
+bash -lc 'command -v pnpm >/dev/null && node -e "const [a,b]=process.versions.node.split(\".\").map(Number); process.exit(a===22 && b>=13 ? 0 : 1)"' || fail '로그인 셸에서 Node 22.13 이상(22.x)과 pnpm이 필요합니다.'
+report=$(ORCHESTRATION_CONFIG="$root/orchestration.config.yml" "$runner" status) || fail '공유 실행기가 설정·디렉터리·세션 상태를 읽지 못했습니다.'
+[[ "$report" == *$'\nRoot: '"$root"$'\n'* && "$report" == *$'\n- portfolio\n  repo: '"$root"$'\n'* ]] || fail '설정의 작업공간과 portfolio 저장소가 현재 clone을 가리켜야 합니다.'
+printf '준비됨: 현재 clone의 설정·작업 템플릿·공유 실행기 상태 확인 (세션 시작 및 원격 쓰기 없음)\n'

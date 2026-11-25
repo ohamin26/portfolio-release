@@ -1,0 +1,46 @@
+# 저장소 루트의 orchestration.config.yml로 복사한다. 상대 경로는 이 파일 위치 기준이다.
+version: 1
+workspace:
+  root: .
+  worktreesDir: worktrees
+  promptsDir: prompts
+  logsDir: logs
+  docsDir: docs
+  scriptsDir: scripts
+  sessionsDir: logs/sessions
+naming:
+  branchTemplate: 'worktree/{{taskSlug}}'
+  legacyBranchTemplate: 'agent/{{agent}}/{{taskSlug}}'
+  tmuxSessionTemplate: 'portfolio-{{agent}}-{{taskSlug}}'
+  worktreePathTemplate: '{{workspaceRoot}}/{{worktreesDir}}/{{repo}}/{{taskSlug}}'
+  legacyWorktreePathTemplate: '{{workspaceRoot}}/{{worktreesDir}}/{{repo}}/{{agent}}-{{taskSlug}}'
+  promptPathTemplate: '{{workspaceRoot}}/{{promptsDir}}/{{repo}}/{{taskSlug}}.md'
+  contextPathTemplate: '{{workspaceRoot}}/{{promptsDir}}/{{repo}}/{{taskSlug}}.context.md'
+  logPathTemplate: '{{workspaceRoot}}/{{logsDir}}/{{date}}/{{repo}}'
+agents:
+  default: opencode
+  allowAutoStart: [opencode]
+repos:
+  portfolio:
+    path: .
+    baseBranch: { default: current, detachedHeadPolicy: require-explicit }
+    install: ['pnpm install --frozen-lockfile']
+    validate:
+      - { name: lint, command: 'pnpm run lint' }
+      - { name: typecheck, command: 'pnpm run typecheck' }
+      - { name: build, command: 'pnpm run build' }
+      - { name: test, command: 'pnpm run test' }
+context:
+  maxContextPackBytes: 262144
+  maxGeneratedPromptBytes: 524288
+  allowedSources: [prompts, docs, 'logs/**/*.summary.md', 'logs/**/*.validation.md', 'logs/**/*.context.md']
+  denyRawTmuxLogs: true
+security:
+  forbiddenFilenames: ['.env*', '*.pem', '*.key', '*.p12', '*.pfx', '*.jks', '*.keystore', '*.cer', '*.crt', 'google-services.json', 'GoogleService-Info.plist', '*.mobileprovision', '*.provisionprofile', id_rsa, id_dsa, id_ecdsa, id_ed25519, credentials.json, 'service-account*.json', 'token*', 'secret*']
+  forbidSecretLikeContent: true
+cleanup:
+  refuseDirtyWorktree: true
+  deleteBranchByDefault: false
+  deleteGeneratedPromptsByDefault: false
+  killTmuxSessionByDefault: false
+  allowedBranchPrefixes: ['worktree/', 'agent/']

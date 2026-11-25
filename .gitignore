@@ -15,4 +15,9 @@ test-results/
 .DS_Store
 /worktrees/
 /logs/
-/prompts/portfolio/
+# Local runner setup, task prompts and session state
+/prompts/
+/orchestration.config.yml
+/scripts/orchestrate
+/scripts/task-board.md
+/docs/orchestration/templates/
