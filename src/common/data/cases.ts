@@ -27,9 +27,9 @@ export const cases = [
     tabTiming: null,
   },
   {
-    slug: "equipment-selection",
+    slug: "scada-interaction",
     field: "산업 모니터링",
-    title: "차트에서 설비 하나를 선택하면 무엇이 달라질까?",
+    title: "설비 도면에서 고른 대상은 차트에 어떻게 연결될까?",
     tabTiming: null,
   },
 ] as const satisfies readonly CaseSummary[];
