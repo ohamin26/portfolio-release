@@ -15,8 +15,23 @@ test("소개에서 대표 작업, AI 작업 방식, 연락 순으로 읽는다",
   await expect(page.locator("#method")).toContainText("에이전트");
 });
 
+test("헤더 로고는 별도 포커스를 받지 않고 프로필 도해는 좁은 화면에서 숨겨진다", async ({ page }) => {
+  const header = page.getByRole("banner");
+  const profileLink = header.getByRole("link", { name: "오하민", exact: true });
+  await expect(profileLink).toHaveAttribute("href", "#profile");
+  await profileLink.focus();
+  await page.keyboard.press("Tab");
+  await expect(header.getByRole("link", { name: "대표 작업", exact: true })).toBeFocused();
+
+  const caption = page.getByText("하나의 규칙, 여러 화면", { exact: true });
+  await page.setViewportSize({ width: 1280, height: 850 });
+  await expect(caption).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 850 });
+  await expect(caption).toBeHidden();
+});
+
 test("프로필의 대표 작업 링크를 키보드로 열면 대표 작업 영역으로 이동한다", async ({ page }) => {
-  const link = page.locator("#profile").getByRole("link", { name: /대표 작업 보기/ });
+  const link = page.locator("#profile").getByRole("link", { name: "대표 작업 보기", exact: true });
   await link.focus();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/#work$/);
@@ -34,8 +49,8 @@ test("첫 탭의 건너뛰기 링크가 본문으로 포커스를 옮긴다", as
 });
 
 test("프로필과 연락 영역이 같은 LinkedIn 프로필로 연결된다", async ({ page }) => {
-  for (const section of ["profile", "contact"]) {
-    const link = page.locator(`#${section}`).getByRole("link", { name: /LinkedIn/i });
+  for (const [section, name] of [["profile", "LinkedIn"], ["contact", "LinkedIn에서 연락하기"]]) {
+    const link = page.locator(`#${section}`).getByRole("link", { name, exact: true });
     await expect(link).toBeVisible();
     await expect(link).toHaveAttribute("href", "https://www.linkedin.com/in/ohamin/");
   }

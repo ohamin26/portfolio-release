@@ -1,4 +1,5 @@
 import { Button } from "@/common/components/ui/button";
+import { NavigationArrow } from "@/common/components/ui/icons/navigation-arrow";
 import { LinkedInLink } from "./linkedin-link";
 import { SystemStudy } from "./system-study";
 import { bodyCopy, eyebrow } from "./home-typography";
@@ -15,7 +16,7 @@ export function ProfileSection() {
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <Button asChild>
-            <a href="#work">대표 작업 보기 <span aria-hidden="true">→</span></a>
+            <a href="#work">대표 작업 보기 <NavigationArrow direction="right" /></a>
           </Button>
           <LinkedInLink>LinkedIn</LinkedInLink>
         </div>
