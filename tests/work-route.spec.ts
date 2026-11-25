@@ -42,13 +42,13 @@ test("직접 주소로 연 사례에서 키보드로 복귀하면 대표 작업 
   await returnToWorkByKeyboard(page);
 });
 
-test("홈에서 연 설비 사례를 조작한 뒤 새 문서 로드 없이 키보드로 대표 작업 목록에 복귀한다", async ({ page }) => {
+test("홈에서 연 도면 요소를 선택한 뒤 새 문서 로드 없이 키보드로 대표 작업 목록에 복귀한다", async ({ page }) => {
   await page.goto("/");
-  const item = cases.find(({ slug }) => slug === "equipment-selection")!;
+  const item = cases.find(({ slug }) => slug === "scada-interaction")!;
   await page.locator("#work").getByRole("link", { name: item.title }).press("Enter");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(item.title);
-  await page.getByRole("radio", { name: "설비 A", exact: true }).click();
-  await expect(page.getByRole("table", { name: "설비 A · 수집 내역" })).toBeVisible();
+  await page.getByRole("radio", { name: "도형 B", exact: true }).click();
+  await expect(page.getByRole("table", { name: "측정점 01 · 조회 내역" })).toBeVisible();
 
   const documentStart = await page.evaluate(() => performance.timeOrigin);
   await returnToWorkByKeyboard(page);
