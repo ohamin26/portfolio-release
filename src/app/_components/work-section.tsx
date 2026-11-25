@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { cases } from "@/common/data/cases";
+import { WorkRegion } from "./work-region";
 import { DeviceStudy, TimingStudy } from "./work-figures";
 import { bodyCopy, eyebrow, folioLabel, microLabel, sectionTitle } from "./home-typography";
 
 export function WorkSection() {
   return (
-    <section className="scroll-mt-6" id="work" tabIndex={-1} aria-labelledby="work-title">
+    <WorkRegion>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 id="work-title" className={eyebrow}>
           <span className="sr-only">대표 작업</span><span aria-hidden="true">01  /  SELECTED WORK</span>
@@ -40,6 +41,6 @@ export function WorkSection() {
           </article>
         );
       })}
-    </section>
+    </WorkRegion>
   );
 }
