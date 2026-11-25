@@ -45,7 +45,7 @@ test("프로필의 대표 작업 링크를 키보드로 열면 대표 작업 영
   await expect(page.locator("#work")).toBeInViewport();
 });
 
-test("첫 탭의 건너뛰기 링크가 본문으로 포커스를 옮긴다", async ({ page }) => {
+test("첫 탭의 건너뛰기 링크가 본문으로 포커스를 옮긴다", { tag: "@cross-browser" }, async ({ page }) => {
   await page.keyboard.press("Tab");
   const skip = page.locator('a[href="#main-content"]');
   await expect(skip).toBeFocused();

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SkipLink } from "@/common/components/ui/skip-link";
 import { Button } from "@/common/components/ui/button";
 import { NavigationArrow } from "@/common/components/ui/icons/navigation-arrow";
 import type { PortfolioCase } from "@/common/data/cases";
@@ -16,11 +17,12 @@ const factValue = "mt-[.35rem] font-[620]";
 export function CaseScreen({ item, intro }: Props) {
   return (
     <div className="mx-auto w-[min(1120px,88%)] font-sans break-keep wrap-anywhere text-foreground case-narrow:w-[calc(100%_-_40px)]">
+      <SkipLink />
       <header className="flex items-center justify-between gap-4 border-b border-border py-[clamp(12px,2vw,28px)]">
         <Link href="/" className="inline-flex min-h-11 items-center text-xl leading-[inherit] font-[720] tracking-[-.045em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring" aria-label="오하민 포트폴리오 홈">오하민</Link>
         <span className={`${folio} text-muted-foreground case-narrow:text-[.65rem]`} lang="en">PORTFOLIO / SELECTED WORK</span>
       </header>
-      <main>
+      <main id="main-content" tabIndex={-1} className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
         <article aria-labelledby="case-title" className="pt-[clamp(44px,7vw,96px)] pb-[clamp(32px,4vw,56px)]">
           <p className={`${folio} flex items-center gap-3 text-ring before:h-0.5 before:w-[18px] before:bg-current`}><span lang="en">CASE STUDY</span> / {item.field}</p>
           <h1 id="case-title" className="my-[.45em] max-w-[18em] text-[clamp(2.1rem,4.7vw,4.1rem)] leading-[1.24] font-[740] tracking-[-.055em]">{item.title}</h1>

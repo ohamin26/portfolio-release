@@ -15,10 +15,12 @@ http://localhost:3000 에서 홈을 확인한다. `/health`는 HTTP 200과 JSON 
 pnpm lint
 pnpm typecheck
 pnpm build
-pnpm exec playwright install --only-shell chromium  # 최초 1회 (Linux CI에서는 --with-deps 추가)
+pnpm exec playwright install --only-shell chromium firefox webkit  # 최초 1회 (Linux CI에서는 --with-deps 추가)
 pnpm test
 ```
 
 `pnpm test`는 먼저 라우트 위치와 공용 모듈의 의존 방향을 검사한다. 이어서 Playwright가 프로덕션 빌드를 루프백 주소에서 시작하여 HTTP 응답을 검사한다. 사례 조회와 그래프 계산을 확인하고, 공용 버튼은 Chromium에서 모바일 너비·키보드 포커스·모션 감소 설정으로 검증한다. 별도의 시연용 라우트는 만들지 않는다. 기본 포트 4177이 사용 중이면 `PORTFOLIO_TEST_PORT=4187 pnpm test`로 실행한다. PR 검사도 같은 순서로 실행하며 배포하지 않는다.
+
+Chromium은 전체 스위트를 실행하고, Firefox와 WebKit은 `@cross-browser`로 표시한 키보드 탐색·SCADA 연동 검사를 실행한다. 빌드 후 특정 엔진만 다시 확인하려면 예를 들어 `pnpm exec playwright test --project=webkit`을 쓴다. Playwright WebKit 결과는 실제 iOS Safari 기기 검증이 아니다.
 
 ESLint는 JavaScript 기본 규칙, TypeScript 권장 규칙, Next.js의 Core Web Vitals 규칙을 사용한다.

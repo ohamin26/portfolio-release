@@ -44,7 +44,7 @@ test("읽기 전용 연결 설정은 같은 조회 키워드에 도형마다 다
   }
 });
 
-test("방향키로 도형을 바꾸면 기존 차트와 표의 조회 대상과 값이 함께 바뀐다", async ({ page }) => {
+test("방향키로 도형을 바꾸면 기존 차트와 표의 조회 대상과 값이 함께 바뀐다", { tag: "@cross-browser" }, async ({ page }) => {
   await page.goto(detail);
   const plan = diagram(page);
   const a = plan.getByRole("radio", { name: "도형 A", exact: true });
