@@ -11,7 +11,7 @@
 | `src/common/data/` | [사례 목록과 slug 조회](../../src/common/data/cases.ts), [탭 표시 감지 시간 비교](../../src/common/data/tab-timing.ts). 화면별 설명·도해는 여기에 넣지 않는다. |
 | `src/common/styles/globals.css` | Tailwind v4 진입점이자 shadcn의 스타일 대상. 클래스 탐색은 `src/`로 한정한다. |
 
-라우트에서 공용 코드는 `@/common/…`로 가져오고, 같은 라우트의 전용 코드는 `./_components/…`로 가져온다. 다른 화면의 전용 모듈을 직접 가져오지 않는다. 두 화면이 같은 기능을 써야 한다면 공용 부분만 추출한다. ESLint는 `src/common/`에서 `src/app/`으로의 정적 import와 재수출을 검사한다.
+파일을 추가하거나 import 경로를 정할 때는 [폴더·파일명·모듈 진입점](module-conventions.md)을 따른다. 허용되는 직접 import 예시와 자동 검사·PR 리뷰의 범위도 그 문서에 있다.
 
 [TypeScript](../../tsconfig.json)의 별칭과 [shadcn 설정](../../components.json)의 생성 경로를 함께 유지한다. `utils`는 [클래스 병합 함수 cn](../../src/common/lib/utils.ts)을 가리킨다. `hooks` 별칭은 생성 위치를 예약한 것이며 구현이 있다는 뜻은 아니다.
 
