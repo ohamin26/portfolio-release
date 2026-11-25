@@ -18,8 +18,8 @@ naming:
   contextPathTemplate: '{{workspaceRoot}}/{{promptsDir}}/{{repo}}/{{taskSlug}}.context.md'
   logPathTemplate: '{{workspaceRoot}}/{{logsDir}}/{{date}}/{{repo}}'
 agents:
-  default: opencode
-  allowAutoStart: [opencode]
+  default: codex
+  allowAutoStart: [codex]
 repos:
   portfolio:
     path: .
