@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
 import { cases } from "@/common/data/cases";
-import { compareTabTiming } from "@/common/data/tab-timing";
 
 test.beforeEach(async ({ page }) => {
   const response = await page.goto("/");
@@ -61,19 +60,6 @@ test("대표 작업에 공용 목록의 모든 사례 제목이 표시된다", a
   for (const item of cases) {
     await expect(work.getByText(item.title, { exact: true })).toBeVisible();
   }
-});
-
-test("탭 전환 전후 시간과 단축률을 공용 측정 조건과 함께 보여준다", async ({ page }) => {
-  const timing = cases.find((item) => item.tabTiming)?.tabTiming;
-  if (!timing) throw new Error("탭 전환 측정값이 없습니다.");
-  const comparison = compareTabTiming(timing);
-  if (!comparison) throw new Error("탭 전환 단축률을 계산할 수 없습니다.");
-  const work = page.locator("#work");
-  for (const value of [timing.beforeMs, timing.afterMs]) {
-    await expect(work.getByText(`${value.toFixed(2)} ms`, { exact: true })).toBeVisible();
-  }
-  await expect(work).toContainText(`${comparison.reductionPercent.toFixed(1)}%`);
-  await expect(work).toContainText(timing.conditions);
 });
 
 test("홈의 기기 비교는 모바일에서 표 다음에 터치 예시를, 데스크톱에서는 두 예시를 나란히 보여준다", async ({ page }) => {

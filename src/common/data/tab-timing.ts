@@ -1,4 +1,4 @@
-/** 한 조건에서 측정한 탭 전환 시간. 측정 조건을 수치와 함께 전달한다. */
+/** 탭을 클릭한 뒤 대상 탭의 표시를 감지하기까지 걸린 시간의 중앙값(ms). */
 export type TabTiming = Readonly<{
   beforeMs: number;
   afterMs: number;

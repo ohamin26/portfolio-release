@@ -17,7 +17,7 @@ export const cases = [
     tabTiming: {
       beforeMs: 14.50,
       afterMs: 2.60,
-      conditions: "탭 10개 · 탭 전환 시간 중앙값",
+      conditions: "탭 10개 · 클릭 후 대상 탭 표시 감지 시간 중앙값",
     },
   },
   {

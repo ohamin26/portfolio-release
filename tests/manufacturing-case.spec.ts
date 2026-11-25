@@ -1,10 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { cases } from "@/common/data/cases";
-import { compareTabTiming } from "@/common/data/tab-timing";
 
 const manufacturing = cases.find((item) => item.slug === "manufacturing-performance")!;
 const detail = `/work/${manufacturing.slug}`;
-const timing = manufacturing.tabTiming;
+const measurement = "탭 10개 · 클릭 후 대상 탭 표시 감지 시간 중앙값";
 
 test("기기별 입력 예시는 같은 품목과 수량을 담고 모바일에서 위아래로 읽힌다", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 812 });
@@ -24,28 +23,28 @@ test("기기별 입력 예시는 같은 품목과 수량을 담고 모바일에�
   expect(touchBox.y).toBeGreaterThanOrEqual(tableBox.y + tableBox.height);
 });
 
-test("제조 사례의 성능 도해가 홈과 같은 탭 전환 측정값과 조건을 표시한다", async ({ page }) => {
-  const change = compareTabTiming(timing)!;
-  const values = [timing.beforeMs, timing.afterMs].map((ms) => `${ms.toFixed(2)} ms`);
-  const reduction = `${change.reductionPercent.toFixed(1)}% 단축`;
-  for (const url of [detail, "/"]) {
+for (const [screen, url] of [["홈", "/"], ["제조 상세", detail]]) {
+  test(`${screen} 도해에 대상 탭 표시 감지 시간의 중앙값과 단축률을 표시한다`, async ({ page }) => {
     await page.goto(url);
-    const scope = url === detail ? page.getByRole("article").locator("section").filter({ hasText: timing.conditions }) : page.locator("#work");
-    if (url === detail) await expect(scope.getByRole("heading", { level: 2 })).toBeVisible();
-    const figure = scope.getByRole("figure").filter({ hasText: timing.conditions });
-    await expect(figure).toBeVisible();
-    for (const value of values) {
-      await expect(figure.getByText(value, { exact: true })).toBeVisible();
+    const figure = page.getByRole("figure").filter({ has: page.locator("figcaption").filter({ hasText: measurement }) });
+    await expect(figure.locator("figcaption")).toBeVisible();
+    await expect(figure.getByText("82.1% 단축", { exact: true })).toBeVisible();
+
+    for (const [label, value] of [["개선 전", "14.50 ms"], ["개선 후", "2.60 ms"]]) {
+      const term = figure.getByRole("term").filter({ hasText: label });
+      await expect(term).toBeVisible();
+      const reading = term.locator("+ dd");
+      await expect(reading).toHaveText(value);
+      await expect(reading).toBeVisible();
     }
-    await expect(figure).toContainText(reduction);
-  }
-});
+  });
+}
 
 test("제조 측정 도해를 다른 상세 페이지에는 노출하지 않는다", async ({ page }) => {
   for (const item of cases.filter((item) => item.slug !== manufacturing.slug)) {
     await page.goto(`/work/${item.slug}`);
     const article = page.getByRole("article");
     await expect(article.getByRole("heading", { level: 1 })).toHaveText(item.title);
-    await expect(article.getByRole("figure").filter({ hasText: timing.conditions })).toHaveCount(0);
+    await expect(article.getByRole("figure").filter({ hasText: measurement })).toHaveCount(0);
   }
 });
