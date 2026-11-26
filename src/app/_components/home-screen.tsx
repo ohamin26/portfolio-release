@@ -3,8 +3,9 @@ import { SkipLink } from "@/common/components/ui/skip-link";
 import { PortfolioMark } from "@/common/components/ui/icons/portfolio-mark";
 import { ProfileSection } from "./profile-section";
 import { WorkSection } from "./work-section";
+import { MethodSection } from "./method-section";
 import { LinkedInLink } from "./linkedin-link";
-import { bodyCopy, folioLabel, microLabel, sectionTitle } from "./home-typography";
+import { folioLabel, microLabel } from "./home-typography";
 
 const navLink = "flex min-h-11 min-w-11 items-center justify-center text-[.875rem] font-[550] hover:underline hover:underline-offset-[.2em] home-narrow:text-[.8rem]";
 
@@ -26,15 +27,7 @@ export function HomeScreen() {
       <main id="main-content" tabIndex={-1}>
         <ProfileSection />
         <WorkSection />
-        <section className="my-[clamp(52px,6vw,88px)] grid scroll-mt-6 grid-cols-[minmax(0,29%)_minmax(0,1fr)] items-center gap-[22px] rounded-[5px] bg-muted p-[26px] home-stack:my-[46px] home-stack:grid-cols-1 home-stack:gap-3 home-stack:p-5" id="method" tabIndex={-1} aria-labelledby="method-title">
-          <div>
-            <span className={microLabel} lang="en">METHOD NOTE / 01</span>
-            <h2 className={`mt-1.5 ${sectionTitle}`} id="method-title">AI 에이전트와 일하는 방식</h2>
-          </div>
-          <p className={bodyCopy}>먼저 목표와 바꿀 범위를 문서에 적고, 반복해서 살펴볼 기준은 체크리스트로 남깁니다.
-            독립적인 작업은 에이전트에게 나눠 맡깁니다. 결과를 합칠 때는 변경이 필요한 범위에 그쳤는지,
-            테스트가 원래 문제를 잡아내는지 직접 확인합니다.</p>
-        </section>
+        <MethodSection />
       </main>
       <footer className="scroll-mt-6 border-t border-border pt-[clamp(28px,3vw,46px)]" id="contact" tabIndex={-1} aria-labelledby="contact-title">
         <span className={microLabel} lang="en">CONTACT</span>

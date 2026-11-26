@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { cases } from "@/common/data/cases";
+import { tabThroughLinks } from "./helpers/keyboard";
 
 test.beforeEach(async ({ page }) => {
   const response = await page.goto("/");
@@ -52,6 +53,21 @@ test("첫 탭의 건너뛰기 링크가 본문으로 포커스를 옮긴다", { 
   await expect(skip).toBeInViewport();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
+});
+
+test("일하는 방식의 두 단락을 읽고 키보드로 포트폴리오 저장소 링크에 도달한다", { tag: "@cross-browser" }, async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 812 });
+  await page.getByRole("navigation", { name: "주요 탐색" }).getByRole("link", { name: "일하는 방식" }).press("Enter");
+  const method = page.getByRole("region", { name: "AI 에이전트와 일하는 방식" });
+  await expect(method.getByRole("paragraph")).toHaveText([
+    /어떤 동작은 그대로 지켜야 하는지 문서에 적습니다/,
+    /탭이 표시됐음을 감지한 시점과 화면이 다 그려진 시점/,
+  ]);
+  await tabThroughLinks(page);
+  const repository = method.getByRole("link", { name: "이 포트폴리오의 GitHub 저장소 보기", exact: true });
+  await expect(repository).toBeFocused();
+  await expect(repository).toBeInViewport();
+  await expect(repository).toHaveAttribute("href", "https://github.com/ohamin26/portfolio-release");
 });
 
 test("프로필과 연락 영역이 같은 LinkedIn 프로필로 연결된다", async ({ page }) => {
