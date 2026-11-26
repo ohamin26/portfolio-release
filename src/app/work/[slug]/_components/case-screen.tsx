@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { SkipLink } from "@/common/components/ui/skip-link";
-import { Button } from "@/common/components/ui/button";
-import { NavigationArrow } from "@/common/components/ui/icons/navigation-arrow";
+import { WorkListLink } from "./work-list-link";
 import type { PortfolioCase } from "@/common/data/cases";
 import type { CaseIntro } from "../_content/introductions";
 import { ScadaStudy } from "./scada-study";
@@ -28,7 +27,7 @@ export function CaseScreen({ item, intro }: Props) {
           <h1 id="case-title" className="my-[.45em] max-w-[18em] text-[clamp(2.1rem,4.7vw,4.1rem)] leading-[1.24] font-[740] tracking-[-.055em]">{item.title}</h1>
           <p className="max-w-[46rem] text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.75] text-muted-foreground">{intro.summary}</p>
           <dl className="mt-[clamp(32px,4vw,56px)] flex flex-wrap gap-x-[clamp(32px,6vw,80px)] gap-y-[18px] case-narrow:flex-col">
-            <div><dt className={factLabel}>내 역할</dt><dd className={factValue}>{intro.role}</dd></div>
+            <div><dt className={factLabel}>내 역할</dt><dd className={factValue}>{item.role}</dd></div>
             <div><dt className={factLabel}>작업 범위</dt><dd className={factValue}>{intro.scope}</dd></div>
           </dl>
           {item.slug === "manufacturing-performance" && <ManufacturingStudy timing={item.tabTiming} />}
@@ -36,9 +35,7 @@ export function CaseScreen({ item, intro }: Props) {
           {item.slug === "scada-interaction" && <ScadaStudy />}
         </article>
         <nav className="border-t border-border pt-6 pb-12" aria-label="사례 탐색">
-          <Button asChild variant="outline" className="focus-visible:outline-offset-4">
-            <Link href="/#work"><NavigationArrow direction="left" /> 대표 작업 목록으로</Link>
-          </Button>
+          <WorkListLink slug={item.slug} />
         </nav>
       </main>
     </div>

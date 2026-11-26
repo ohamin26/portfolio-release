@@ -63,7 +63,7 @@ test("프로필과 연락 영역이 같은 LinkedIn 프로필로 연결된다", 
 });
 
 for (const width of [390, 1280]) {
-  test(`${width}px 홈에서 프로필 표기와 세 사례 링크, 후속 두 행의 문구를 확인한다`, async ({ page }) => {
+  test(`${width}px 홈은 첫 사례 소개만 펼친다`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     const profileLabel = page.locator("#profile").getByText(/^PROFILE\s*\//);
     await expect(profileLabel).toHaveText("PROFILE / OH HAMIN");
@@ -71,16 +71,55 @@ for (const width of [390, 1280]) {
     await expect(rows).toHaveCount(cases.length);
     for (const [index, item] of cases.entries()) {
       const row = rows.nth(index);
-      const link = row.getByRole("link", { name: item.title, exact: true });
-      await expect(link).toBeVisible();
-      await expect(link).toHaveAttribute("href", `/work/${item.slug}`);
-      if (index > 0) {
-        const number = String(index + 1).padStart(2, "0");
-        await expect(row).toHaveText(`${number} ${item.field} ${item.title}`, { useInnerText: true });
+      const title = row.getByRole("heading", { level: 3 }).getByRole("button", { name: item.title, exact: true });
+      await expect(title).toBeVisible();
+      await expect(title).toHaveAttribute("aria-expanded", String(index === 0));
+      await expect(title).toHaveAttribute("aria-controls", /\S/);
+      const panelId = await title.getAttribute("aria-controls");
+      const panel = row.locator(`[id="${panelId}"]`);
+      await expect(panel).toHaveCount(1);
+      const detail = panel.getByRole("link", { name: /상세 보기/ });
+      if (index === 0) {
+        await expect(panel).toBeVisible();
+        await expect(detail).toBeVisible();
+      } else {
+        await expect(panel).toBeHidden();
+        await expect(detail).toHaveCount(0);
       }
     }
   });
 }
+
+test("한 사례를 펴면 이전 소개가 닫히고 같은 제목을 다시 누르면 이동 없이 접힌다", async ({ page }) => {
+  const work = page.locator("#work");
+  const first = work.getByRole("button", { name: cases[0].title, exact: true });
+  const second = work.getByRole("button", { name: cases[1].title, exact: true });
+  const payment = work.getByRole("article").filter({
+    has: page.getByRole("button", { name: cases[1].title, exact: true }),
+  });
+
+  await second.click();
+  await expect(page).toHaveURL("/");
+  await expect(first).toHaveAttribute("aria-expanded", "false");
+  await expect(second).toHaveAttribute("aria-expanded", "true");
+  await expect(work.getByRole("link", { name: /상세 보기/ })).toHaveCount(1);
+  await expect(payment).toContainText("선주문 취소");
+  await expect(payment).toContainText("주문 완료");
+
+  await second.click();
+  await expect(second).toHaveAttribute("aria-expanded", "false");
+  await expect(work.getByRole("link", { name: /상세 보기/ })).toHaveCount(0);
+  await expect(page).toHaveURL("/");
+});
+
+test("직접 대표 작업 해시 주소를 열면 첫 카드가 기본으로 펼쳐진다", async ({ page }) => {
+  await page.goto("/#work");
+  const work = page.locator("#work");
+  await expect(work).toBeInViewport();
+  await expect(work.getByRole("button", { name: cases[0].title })).toHaveAttribute("aria-expanded", "true");
+  await expect(work.getByRole("button", { name: cases[1].title })).toHaveAttribute("aria-expanded", "false");
+  await expect(work.getByRole("button", { name: cases[2].title })).toHaveAttribute("aria-expanded", "false");
+});
 
 test("홈의 기기 비교는 모바일에서 표 다음에 터치 예시를, 데스크톱에서는 두 예시를 나란히 보여준다", async ({ page }) => {
   const work = page.locator("#work");
