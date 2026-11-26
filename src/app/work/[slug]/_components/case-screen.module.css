@@ -1,0 +1,10 @@
+@media (prefers-reduced-motion: no-preference) {
+  .intro {
+    animation: case-intro-fade 180ms ease-out;
+  }
+}
+
+@keyframes case-intro-fade {
+  from { opacity: .86; }
+  to { opacity: 1; }
+}

@@ -1,3 +1,4 @@
+import { WorkLink } from "./work-link";
 import { Button } from "@/common/components/ui/button";
 import { NavigationArrow } from "@/common/components/ui/icons/navigation-arrow";
 import { LinkedInLink } from "./linkedin-link";
@@ -16,7 +17,7 @@ export function ProfileSection() {
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <Button asChild>
-            <a href="#work">대표 작업 보기 <NavigationArrow direction="right" /></a>
+            <WorkLink>대표 작업 보기 <NavigationArrow direction="right" /></WorkLink>
           </Button>
           <LinkedInLink>LinkedIn</LinkedInLink>
         </div>

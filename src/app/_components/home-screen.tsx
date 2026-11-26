@@ -1,3 +1,4 @@
+import { WorkLink } from "./work-link";
 import { SkipLink } from "@/common/components/ui/skip-link";
 import { PortfolioMark } from "@/common/components/ui/icons/portfolio-mark";
 import { ProfileSection } from "./profile-section";
@@ -17,7 +18,7 @@ export function HomeScreen() {
           오하민
         </a>
         <nav className="flex flex-wrap items-center gap-[clamp(6px,2vw,30px)] home-narrow:gap-[5px]" aria-label="주요 탐색">
-          <a className={navLink} href="#work">대표 작업</a>
+          <WorkLink className={navLink}>대표 작업</WorkLink>
           <a className={navLink} href="#method">일하는 방식</a>
           <a className={navLink} href="#contact">연락</a>
         </nav>

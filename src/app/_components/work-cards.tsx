@@ -7,6 +7,7 @@ import { DisclosureChevron } from "@/common/components/ui/icons/disclosure-chevr
 import { NavigationArrow } from "@/common/components/ui/icons/navigation-arrow";
 import { cases, type PortfolioCase } from "@/common/data/cases";
 import { readReturningCard, rememberWorkCard } from "@/common/lib/work-card-return";
+import { emphasizeWorkTitle } from "./work-arrival";
 import { bodyCopy, microLabel, sectionTitle } from "./home-typography";
 
 type Slug = PortfolioCase["slug"];
@@ -27,6 +28,7 @@ export function WorkCards({ children: manufacturingFigures }: { children: ReactN
           const button = document.getElementById(buttonId(slug));
           button?.focus({ preventScroll: true });
           button?.scrollIntoView({ block: "start", behavior: "instant" });
+          emphasizeWorkTitle(button?.querySelector<HTMLElement>("[data-work-title]") ?? null);
         });
       } else if (window.location.hash === "#work" && document.activeElement === document.body) {
         document.getElementById("work")?.focus({ preventScroll: true });
@@ -67,7 +69,7 @@ export function WorkCards({ children: manufacturingFigures }: { children: ReactN
             <span className="flex items-center gap-3 font-semibold home-narrow:col-span-2">
               <span className={microLabel}>{String(index + 1).padStart(2, "0")}</span>{item.field}
             </span>
-            <span id={labelId} className={sectionTitle}>{item.title}</span>
+            <span id={labelId} data-work-title="" className={`${sectionTitle} motion-safe:data-[work-arrival]:animate-work-arrival`}>{item.title}</span>
             <DisclosureChevron expanded={open} />
           </button>
         </h3>

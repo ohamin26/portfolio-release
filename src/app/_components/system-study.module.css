@@ -1,0 +1,14 @@
+@media (prefers-reduced-motion: no-preference) {
+  .figure[data-assembling] [data-study-layer] {
+    animation: assemble 700ms cubic-bezier(.2, .7, .25, 1) both;
+  }
+
+  .figure [data-study-layer="base"] { --x: -5px; --y: 6px; }
+  .figure [data-study-layer="middle"] { --x: -2px; --y: 3px; }
+  .figure [data-study-layer="top"] { --x: 5px; --y: -4px; }
+}
+
+@keyframes assemble {
+  from { transform: translate(var(--x), var(--y)); opacity: .78; }
+  to { transform: translate(0, 0); opacity: 1; }
+}

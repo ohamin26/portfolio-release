@@ -18,6 +18,14 @@
   --ui-selection: #1d44a0;
 }
 
+@theme {
+  --animate-work-arrival: work-title-arrive 200ms cubic-bezier(.2, .7, .25, 1);
+  @keyframes work-title-arrive {
+    from { transform: translateY(6px); opacity: .65; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
 @theme inline {
   --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
