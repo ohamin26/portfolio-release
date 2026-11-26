@@ -139,8 +139,12 @@ test("홈의 기기 비교는 모바일에서 표 다음에 터치 예시를, �
 });
 
 for (const width of [320, 390, 768, 1440]) {
-  test(`${width}px에서 가로 스크롤 없이 홈을 읽을 수 있다`, async ({ page }) => {
+  test(`${width}px에서 소개 문장을 새 줄로 구분하고 가로 스크롤 없이 홈을 읽는다`, async ({ page }) => {
     await page.setViewportSize({ width, height: 850 });
+    expect(await page.locator("#profile-title + p").innerText()).toBe([
+      "누구에게나 망설임 없이 보여줄 수 있는 서비스를 만듭니다.",
+      "단순히 동작하는 것에 만족하지 않고, 더 나은 방법을 고민합니다.",
+    ].join("\n"));
     expect(await page.evaluate(() => {
       const { scrollWidth, clientWidth } = document.documentElement;
       return scrollWidth <= clientWidth;
