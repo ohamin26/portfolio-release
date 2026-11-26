@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { cases, findCaseBySlug } from "@/common/data/cases";
+import { cases } from "@/common/data/cases";
 import { CaseScreen } from "./_components/case-screen";
 import { introductions } from "./_content/introductions";
 
@@ -14,9 +14,10 @@ export function generateStaticParams() {
 
 async function readCase(params: Props["params"]) {
   const { slug } = await params;
-  const item = findCaseBySlug(slug);
+  const index = cases.findIndex((item) => item.slug === slug);
+  const item = cases[index];
   if (!item) notFound();
-  return { item, intro: introductions[item.slug] };
+  return { item, intro: introductions[item.slug], nextCase: cases.at(index + 1) };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,6 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CasePage({ params }: Props) {
-  const { item, intro } = await readCase(params);
-  return <CaseScreen item={item} intro={intro} />;
+  const { item, intro, nextCase } = await readCase(params);
+  return <CaseScreen item={item} intro={intro} nextCase={nextCase} />;
 }
