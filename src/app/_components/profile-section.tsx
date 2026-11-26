@@ -12,8 +12,9 @@ export function ProfileSection() {
         <p className={eyebrow} lang="en">PROFILE  /  OH HAMIN</p>
         <h1 className="mt-[.55em] mb-[.42em] text-[clamp(44px,5.15vw,72px)] font-[750] leading-[1.16] tracking-[-.065em] home-stack:text-[clamp(36px,7vw,52px)]" id="profile-title">프론트엔드 개발자 <span className="block">오하민입니다.</span></h1>
         <p className={`${bodyCopy} max-w-[650px] text-[clamp(1rem,1.4vw,1.2rem)]`}>
-          제조 현장의 터치 화면부터 자동차 정비 서비스의 결제 화면까지 만들어 왔습니다.
-          같은 업무라도 누가, 어디서 쓰느냐에 따라 화면이 어떻게 달라져야 하는지 고민합니다.
+          누구에게나 망설임 없이 보여줄 수 있는 서비스를 만듭니다.
+          <br />
+          단순히 동작하는 것에 만족하지 않고, 더 나은 방법을 고민합니다.
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <Button asChild>
