@@ -8,4 +8,4 @@
 - [shadcn/ui 라이선스](docs/licenses/shadcn-ui.md)
 - [에이전트 작업 규칙](AGENTS.md) · [작업 이슈](https://github.com/ohamin26/portfolio-release/issues)
 
-라우트는 `src/app/`, 공유 코드는 `src/common/`에서 관리한다. 홈의 대표 작업 제목을 누르면 `/work/[slug]`의 사례 소개로 이동한다. 각 상세 주소로 직접 접속하거나 읽은 뒤 `/#work`로 돌아갈 수 있다.
+라우트는 `src/app/`, 공유 코드는 `src/common/`에서 관리한다. 홈의 대표 작업 제목을 누르면 해당 사례에서 맡은 일이 펼쳐지고, ‘상세 보기’로 `/work/[slug]`를 연다. 상세에서 목록으로 돌아오면 읽던 카드에서 탐색을 이어간다.

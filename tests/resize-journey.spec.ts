@@ -30,7 +30,7 @@ async function expectReadableLayout(page: Page) {
     const width = document.documentElement.clientWidth;
     if (document.documentElement.scrollWidth > width + 1) result.push("페이지 전체의 가로 넘침");
     // 스크린리더 전용 텍스트·숨은 도해 대신, 실제 보이는 제목·도해·행동을 확인한다.
-    const selector = "h1, h2, h3, p, li, figcaption, caption, th, td, dt, dd, label, a";
+    const selector = "h1, h2, h3, p, li, figcaption, caption, th, td, dt, dd, label, a, button";
     const fragments: { rect: DOMRect; name: string }[] = [];
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     while (walker.nextNode()) {
@@ -38,11 +38,14 @@ async function expectReadableLayout(page: Page) {
       const el = node.parentElement;
       const name = node.textContent?.trim();
       if (!name || !el?.closest(selector) || el.closest(".sr-only,[aria-hidden=true]")) continue;
+      const action = el.closest("a, label, button");
+      const fixedAction = action && getComputedStyle(action).position === "fixed";
       const range = new Range();
       range.selectNodeContents(node);
       for (const rect of range.getClientRects()) {
         if (rect.width < 1 || rect.height < 1 || rect.bottom + window.scrollY < 0) continue;
-        const action = el.closest("a, label");
+        // 고정 링크는 문서가 아니라 뷰포트 기준이다. 실제 화면 밖의 조각만 제외한다.
+        if (fixedAction && (rect.bottom <= 0 || rect.top >= window.innerHeight)) continue;
         if (action) {
           const box = action.getBoundingClientRect();
           if (rect.top < box.top - 2 || rect.bottom > box.bottom + 2) result.push(`조작 영역 밖의 글자: ${name}`);
@@ -75,13 +78,20 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }
   test.describe(`터치 화면 ${viewport.width}×${viewport.height} · 글자 크기 200% 모사`, () => {
     test.use({ viewport, hasTouch: true });
 
-    for (const item of cases) {
+    for (const [index, item] of cases.entries()) {
       test(`홈에서 ${item.field} 사례를 읽고 목록을 거쳐 연락까지 이동한다`, async ({ page }) => {
         await page.goto("/");
         await enlargeText(page);
         await expectReadableLayout(page);
         await page.getByRole("link", { name: "대표 작업 보기", exact: true }).tap();
-        await page.locator("#work").getByRole("link", { name: item.title, exact: true }).tap();
+        const work = page.locator("#work");
+        const cardTitle = work.getByRole("button", { name: item.title, exact: true });
+        if (index > 0) {
+          await cardTitle.tap();
+          await enlargeText(page);
+          await expectReadableLayout(page);
+        }
+        await work.getByRole("link", { name: /상세 보기/ }).tap();
 
         await expect(page.getByRole("heading", { level: 1 })).toHaveText(item.title);
         await enlargeText(page);
@@ -90,7 +100,9 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }
 
         await expect(page).toHaveURL("/#work");
         await enlargeText(page);
-        await expect(page.locator("#work")).toBeFocused();
+        await expect(cardTitle).toHaveAttribute("aria-expanded", "true");
+        await expect(cardTitle).toBeFocused();
+        await expect(cardTitle).toBeInViewport();
         await page.getByRole("navigation", { name: "주요 탐색" }).getByRole("link", { name: "연락", exact: true }).tap();
         const contact = page.locator("#contact").getByRole("link", { name: "LinkedIn에서 연락하기" });
         await expect(contact).toBeInViewport();
