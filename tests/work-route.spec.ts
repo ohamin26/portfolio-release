@@ -115,16 +115,46 @@ test("브라우저 뒤로 가기는 원래 홈 주소와 읽던 카드의 펼침
   await expect(title).toHaveAttribute("aria-expanded", "false");
 });
 
+test("키보드로 다음 사례를 이어 읽고 목록에서 마지막 카드로 돌아온다", { tag: "@cross-browser" }, async ({ page }) => {
+  await page.goto("/");
+  const documentStart = await page.evaluate(() => performance.timeOrigin);
+  await findCard(page, cases[0]).detail.click();
+
+  const nav = page.getByRole("navigation", { name: "사례 탐색" });
+  for (const next of cases.slice(1)) {
+    await nav.getByRole("link", { name: "대표 작업 목록으로", exact: true }).focus();
+    await tabThroughLinks(page);
+    const link = nav.getByRole("link", { name: `다음 작업 ${next.title}`, exact: true });
+    await expect(link).toBeFocused();
+    await expect(link).toBeInViewport();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(`/work/${next.slug}`);
+    await expect(page.getByRole("heading", { name: next.title, level: 1 })).toBeInViewport();
+  }
+  await expect(nav.getByRole("link")).toHaveCount(1);
+  await returnToWorkByKeyboard(page, cases[cases.length - 1]);
+  expect(await page.evaluate(() => performance.timeOrigin)).toBe(documentStart);
+});
+
 test("등록되지 않은 사례 주소는 HTTP 404를 반환한다", async ({ request }) => {
   const response = await request.get("/work/unknown-portfolio-case", { maxRedirects: 0 });
   expect(response.status()).toBe(404);
 });
 
-test("모바일 너비에서 상세 본문을 가로 스크롤 없이 읽는다", async ({ page }) => {
+test("320px에서 직접 연 상세는 가로 넘침 없이 다음 편이 있을 때만 제목 링크를 제공한다", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 812 });
-  for (const item of cases) {
+  for (const [index, item] of cases.entries()) {
     await page.goto(`/work/${item.slug}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(item.title);
+    const nav = page.getByRole("navigation", { name: "사례 탐색" });
+    await expect(nav.getByRole("link", { name: "대표 작업 목록으로", exact: true })).toHaveAttribute("href", "/#work");
+    const next = cases.at(index + 1);
+    await expect(nav.getByRole("link")).toHaveCount(next ? 2 : 1);
+    if (next) {
+      const link = nav.getByRole("link", { name: `다음 작업 ${next.title}`, exact: true });
+      await expect(link).toHaveAttribute("href", `/work/${next.slug}`);
+      await expect(link.getByText(next.title, { exact: true })).toBeVisible();
+    }
     expect(await page.evaluate(() => {
       const { scrollWidth, clientWidth } = document.documentElement;
       return scrollWidth <= clientWidth;

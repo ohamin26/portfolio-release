@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SkipLink } from "@/common/components/ui/skip-link";
-import { WorkListLink } from "./work-list-link";
+import { CaseNavigation } from "./case-navigation";
 import type { PortfolioCase } from "@/common/data/cases";
 import type { CaseIntro } from "../_content/introductions";
 import { ScadaStudy } from "./scada-study";
@@ -8,13 +8,13 @@ import { ManufacturingStudy } from "./manufacturing-study";
 import { PaymentStudy } from "./payment-study";
 import styles from "./case-screen.module.css";
 
-type Props = { item: PortfolioCase; intro: CaseIntro };
+type Props = { item: PortfolioCase; intro: CaseIntro; nextCase: PortfolioCase | undefined };
 
 const folio = "font-mono text-[.75rem] leading-[1.6] font-[550] tracking-[.04em]";
 const factLabel = "text-[.85rem] text-muted-foreground";
 const factValue = "mt-[.35rem] font-[620]";
 
-export function CaseScreen({ item, intro }: Props) {
+export function CaseScreen({ item, intro, nextCase }: Props) {
   return (
     <div className="mx-auto w-[min(1120px,88%)] font-sans break-keep wrap-anywhere text-foreground case-narrow:w-[calc(100%_-_40px)]">
       <SkipLink />
@@ -35,9 +35,7 @@ export function CaseScreen({ item, intro }: Props) {
           {item.slug === "payment-recovery" && <PaymentStudy />}
           {item.slug === "scada-interaction" && <ScadaStudy />}
         </article>
-        <nav className="border-t border-border pt-6 pb-12" aria-label="사례 탐색">
-          <WorkListLink slug={item.slug} />
-        </nav>
+        <CaseNavigation slug={item.slug} nextCase={nextCase} />
       </main>
     </div>
   );
