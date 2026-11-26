@@ -14,7 +14,10 @@ export function ScadaReadings({ source }: { source: MeasurementSource }) {
               <dt className="text-sm text-muted-foreground">{time}</dt>
               <dd className="grid grid-cols-[1fr_3ch] items-center gap-3 text-right font-semibold">
                 <span aria-hidden="true" className="block h-2 bg-muted">
-                  <span className="block h-full bg-ring" style={{ width: `${value / axisMax * 100}%` }} />
+                  <span
+                    className="block h-full origin-left bg-ring motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out"
+                    style={{ transform: `scaleX(${value / axisMax})` }}
+                  />
                 </span>
                 {value}
               </dd>

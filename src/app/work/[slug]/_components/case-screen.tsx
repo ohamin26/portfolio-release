@@ -6,6 +6,7 @@ import type { CaseIntro } from "../_content/introductions";
 import { ScadaStudy } from "./scada-study";
 import { ManufacturingStudy } from "./manufacturing-study";
 import { PaymentStudy } from "./payment-study";
+import styles from "./case-screen.module.css";
 
 type Props = { item: PortfolioCase; intro: CaseIntro };
 
@@ -24,8 +25,8 @@ export function CaseScreen({ item, intro }: Props) {
       <main id="main-content" tabIndex={-1} className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
         <article aria-labelledby="case-title" className="pt-[clamp(44px,7vw,96px)] pb-[clamp(32px,4vw,56px)]">
           <p className={`${folio} flex items-center gap-3 text-ring before:h-0.5 before:w-[18px] before:bg-current`}><span lang="en">CASE STUDY</span> / {item.field}</p>
-          <h1 id="case-title" className="my-[.45em] max-w-[18em] text-[clamp(2.1rem,4.7vw,4.1rem)] leading-[1.24] font-[740] tracking-[-.055em]">{item.title}</h1>
-          <p className="max-w-[46rem] text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.75] text-muted-foreground">{intro.summary}</p>
+          <h1 id="case-title" className={`${styles.intro} my-[.45em] max-w-[18em] text-[clamp(2.1rem,4.7vw,4.1rem)] leading-[1.24] font-[740] tracking-[-.055em]`}>{item.title}</h1>
+          <p className={`${styles.intro} max-w-[46rem] text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.75] text-muted-foreground`}>{intro.summary}</p>
           <dl className="mt-[clamp(32px,4vw,56px)] flex flex-wrap gap-x-[clamp(32px,6vw,80px)] gap-y-[18px] case-narrow:flex-col">
             <div><dt className={factLabel}>내 역할</dt><dd className={factValue}>{item.role}</dd></div>
             <div><dt className={factLabel}>작업 범위</dt><dd className={factValue}>{intro.scope}</dd></div>

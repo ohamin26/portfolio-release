@@ -13,10 +13,13 @@ async function expectReadings(page: Page, source: string, values: readonly [numb
   await expect(table.getByRole("columnheader")).toHaveText(["시간", "예시 값"]);
 
   const track = chart.getByRole("definition").first().locator('[aria-hidden="true"]');
-  const trackWidth = (await track.boundingBox())!.width;
-  const barWidth = (await track.locator(":scope > *").boundingBox())!.width;
-  expect(trackWidth).toBeGreaterThan(0);
-  expect(Math.abs(barWidth - trackWidth * values[0] / 20)).toBeLessThanOrEqual(1);
+  // 선택 직후에는 막대가 이전 값에서 새 값으로 전환 중일 수 있다.
+  await expect.poll(() => track.evaluate((element, value) => {
+    const trackWidth = element.getBoundingClientRect().width;
+    const barWidth = element.firstElementChild?.getBoundingClientRect().width;
+    if (trackWidth <= 0 || barWidth === undefined) return Infinity;
+    return Math.abs(barWidth - trackWidth * value / 20);
+  }, values[0])).toBeLessThanOrEqual(1);
   const rows = table.getByRole("row").filter({ has: page.getByRole("cell") });
   await expect(rows).toHaveCount(2);
   for (const [index, time] of ["09:00", "10:00"].entries()) {
