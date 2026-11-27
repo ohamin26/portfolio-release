@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cases } from "@/common/data/cases";
+import { caseCard, shareMetadata } from "@/common/lib/share-metadata";
 import { CaseScreen } from "./_components/case-screen";
 import { introductions } from "./_content/introductions";
 
@@ -22,7 +23,7 @@ async function readCase(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { item, intro } = await readCase(params);
-  return { title: `${item.title} | 오하민 포트폴리오`, description: intro.summary };
+  return shareMetadata(caseCard(item), intro.summary);
 }
 
 export default async function CasePage({ params }: Props) {
