@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SkipLink } from "@/common/components/ui/skip-link";
+import { PortfolioMark } from "@/common/components/ui/icons/portfolio-mark";
 import { CaseNavigation } from "./case-navigation";
 import type { PortfolioCase } from "@/common/data/cases";
 import type { CaseIntro } from "../_content/introductions";
@@ -19,7 +20,10 @@ export function CaseScreen({ item, intro, nextCase }: Props) {
     <div className="mx-auto w-[min(1120px,88%)] font-sans break-keep wrap-anywhere text-foreground case-narrow:w-[calc(100%_-_40px)]">
       <SkipLink />
       <header className="flex items-center justify-between gap-4 border-b border-border py-[clamp(12px,2vw,28px)]">
-        <Link href="/" className="inline-flex min-h-11 items-center text-xl leading-[inherit] font-[720] tracking-[-.045em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring" aria-label="오하민 포트폴리오 홈">오하민</Link>
+        <Link href="/" className="inline-flex min-h-11 shrink-0 items-center gap-2 text-xl leading-[inherit] font-[720] tracking-[-.045em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring" aria-label="오하민 포트폴리오 홈">
+          <PortfolioMark className="text-ring case-narrow:size-[25px]" />
+          오하민
+        </Link>
         <span className={`${folio} text-muted-foreground case-narrow:text-[.65rem]`} lang="en">PORTFOLIO / SELECTED WORK</span>
       </header>
       <main id="main-content" tabIndex={-1} className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">

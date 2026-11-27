@@ -23,6 +23,7 @@
 
 ## 링크·이미지 선택 기준
 
+- 홈과 상세 헤더는 [PortfolioMark](../../src/common/components/ui/icons/portfolio-mark.tsx)를 링크 안의 장식으로 사용한다. [탭 아이콘](../../src/app/favicon.ico)은 같은 마크를 헤더 색상으로 16·32·48px 내보낸 파일이다. 마크가 바뀌면 이 파일도 갱신한다. 루트 App Router가 모든 페이지에 아이콘 링크를 등록하므로 페이지별 메타데이터에 중복 선언하지 않는다.
 - 다른 페이지로 이동할 때는 `next/link`를 우선한다. 펼쳐진 카드의 ‘상세 보기’, 상세 상단의 홈 링크, 상세에서 홈 목록으로 돌아가는 `/#work`가 여기에 해당한다. 버튼처럼 보이는 링크도 `Button asChild` 안에 링크 하나만 둔다.
 - 같은 문서 안의 `#work`, `#contact`, 본문 바로가기와 외부 LinkedIn 주소는 기본 `<a href>`를 사용한다.
 - [본문 바로가기](../../src/common/components/ui/skip-link.tsx)는 본문 시작이 이미 보이면 스크롤하지 않고 포커스와 주소만 옮긴다. 다음 Tab으로 이동한 요소는 브라우저가 화면에 표시한다. 본문 시작이 화면 밖이거나 JavaScript를 사용할 수 없으면 기본 앵커가 동작한다.
