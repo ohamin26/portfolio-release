@@ -12,6 +12,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "build": "next build",
     "start": "next start",
+    "share:images": "node --experimental-strip-types scripts/generate-share-cards.mjs",
     "test": "node --test tests/structure.test.mjs && playwright test"
   },
   "dependencies": {
